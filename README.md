@@ -1,12 +1,5 @@
 <p align="center">
   <h1 align="center">✨3D Solar System Using 
-### 🔐 Environment Variables
-
-Create a `.env` file in the project root to enable the Gemini-powered chatbot (currently using `gemini-2.5-flash`):
-
-```bash
-VITE_GEMINI_API_KEY=your_google_ai_studio_key
-```
 & Vite - VibeCode🌌</h1>
   <p align="center">
     <b>A visually interactive 3D Solar System simulation built with <a href="https://threejs.org/">Three.js</a> and <a href="https://vitejs.dev/">Vite</a>.</b><br>
