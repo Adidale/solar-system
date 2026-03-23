@@ -17,5 +17,5 @@ export default defineConfig({
     open: true,
   },
   // Ensure proper handling of assets
-  assetsInclude: ['**/*.jpg', '**/*.png', '**/*.mp3'],
+  assetsInclude: ['**/*.jpg', '**/*.png'],
 });

@@ -9,15 +9,6 @@ import { Lensflare, LensflareElement } from "three/examples/jsm/objects/Lensflar
 // NASA API Key for real-time planet data
 const NASA_API_KEY = "CH3TuB34hg317ulEggcZCMlKgCCPYQeTzdzJDNCz";
 
-// Expose environment configuration for UI scripts (e.g., chatbot Gemini integration)
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY ?? "";
-
-if (typeof window !== "undefined") {
-  window.__APP_ENV = {
-    ...(window.__APP_ENV || {}),
-    GEMINI_API_KEY,
-  };
-}
 
 // Scene and Camera Setup
 const scene = new THREE.Scene();
@@ -28,7 +19,7 @@ const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
-  1000
+  3000
 );
 
 // Renderer
@@ -71,7 +62,7 @@ scene.add(fillLight);
 // Starfield
 const starTexture = loader.load("/textures/8k_stars.jpg");
 const skyTexture = loader.load("/textures/stars.jpg");
-const starGeo = new THREE.SphereGeometry(200, 64, 64);
+const starGeo = new THREE.SphereGeometry(600, 64, 64);
 const starMat = new THREE.MeshBasicMaterial({
   map: starTexture,
   side: THREE.BackSide,
@@ -81,7 +72,7 @@ const starMat = new THREE.MeshBasicMaterial({
 const starfield = new THREE.Mesh(starGeo, starMat);
 scene.add(starfield);
 
-const skyGeo = new THREE.SphereGeometry(190, 64, 64);
+const skyGeo = new THREE.SphereGeometry(580, 64, 64);
 const skyMat = new THREE.MeshBasicMaterial({
   map: skyTexture,
   side: THREE.BackSide,
@@ -101,7 +92,7 @@ const sunMaterial = new THREE.MeshBasicMaterial({
   toneMapped: false,
   color: new THREE.Color(1.2, 1.1, 0.9)
 });
-const sun = new THREE.Mesh(new THREE.SphereGeometry(5, 64, 64), sunMaterial);
+const sun = new THREE.Mesh(new THREE.SphereGeometry(7, 64, 64), sunMaterial);
 scene.add(sun);
 
 // Lens flare
@@ -437,8 +428,8 @@ const asteroidBelts = {
 function createEnhancedAsteroidBelt() {
   // Inner belt (closer to Mars)
   const innerCount = 150;
-  const innerInnerRadius = 19.5;
-  const innerOuterRadius = 21.5;
+  const innerInnerRadius = 25;
+  const innerOuterRadius = 29;
   
   for (let i = 0; i < innerCount; i++) {
     const angle = (i / innerCount) * Math.PI * 2 + Math.random() * 0.5;
@@ -491,8 +482,8 @@ function createEnhancedAsteroidBelt() {
   
   // Middle belt
   const middleCount = 200;
-  const middleInnerRadius = 21.5;
-  const middleOuterRadius = 23.5;
+  const middleInnerRadius = 28;
+  const middleOuterRadius = 33;
   
   for (let i = 0; i < middleCount; i++) {
     const angle = (i / middleCount) * Math.PI * 2 + Math.random() * 0.5;
@@ -545,8 +536,8 @@ function createEnhancedAsteroidBelt() {
   
   // Outer belt (closer to Jupiter)
   const outerCount = 150;
-  const outerInnerRadius = 23.5;
-  const outerOuterRadius = 25.5;
+  const outerInnerRadius = 32;
+  const outerOuterRadius = 38;
   
   for (let i = 0; i < outerCount; i++) {
     const angle = (i / outerCount) * Math.PI * 2 + Math.random() * 0.5;
@@ -601,13 +592,13 @@ function createEnhancedAsteroidBelt() {
 // Create Jupiter Trojans with enhanced detail
 function createJupiterTrojans() {
   const asteroidCount = 100;
-  const jupiterDistance = 25;
+  const jupiterDistance = 39;
   
   // L4 Trojans (60° ahead of Jupiter)
   for (let i = 0; i < asteroidCount / 2; i++) {
     const baseAngle = Math.PI / 3;
     const angle = baseAngle + (Math.random() - 0.5) * 1.0;
-    const radius = jupiterDistance + (Math.random() - 0.5) * 4;
+    const radius = jupiterDistance + (Math.random() - 0.5) * 6;
     const size = 0.02 + Math.random() * 0.05;
     
     const asteroidGeo = new THREE.SphereGeometry(size, 6, 6);
@@ -644,7 +635,7 @@ function createJupiterTrojans() {
   for (let i = 0; i < asteroidCount / 2; i++) {
     const baseAngle = -Math.PI / 3;
     const angle = baseAngle + (Math.random() - 0.5) * 1.0;
-    const radius = jupiterDistance + (Math.random() - 0.5) * 4;
+    const radius = jupiterDistance + (Math.random() - 0.5) * 6;
     const size = 0.02 + Math.random() * 0.05;
     
     const asteroidGeo = new THREE.SphereGeometry(size, 6, 6);
@@ -681,8 +672,8 @@ function createJupiterTrojans() {
 // Create Kuiper Belt with enhanced detail
 function createKuiperBelt() {
   const asteroidCount = 200;
-  const innerRadius = 44;
-  const outerRadius = 58;
+  const innerRadius = 92;
+  const outerRadius = 114;
   
   for (let i = 0; i < asteroidCount; i++) {
     const angle = (i / asteroidCount) * Math.PI * 2 + Math.random() * 1.0;
@@ -737,8 +728,8 @@ function createKuiperBelt() {
 // Create Scattered Disk
 function createScatteredDisk() {
   const asteroidCount = 80;
-  const innerRadius = 58;
-  const outerRadius = 80;
+  const innerRadius = 112;
+  const outerRadius = 135;
   
   for (let i = 0; i < asteroidCount; i++) {
     const angle = Math.random() * Math.PI * 2;
@@ -785,8 +776,8 @@ function createScatteredDisk() {
 // Create Oort Cloud (simplified representation)
 function createOortCloud() {
   const asteroidCount = 50;
-  const innerRadius = 80;
-  const outerRadius = 120;
+  const innerRadius = 140;
+  const outerRadius = 175;
   
   for (let i = 0; i < asteroidCount; i++) {
     const angle = Math.random() * Math.PI * 2;
@@ -840,121 +831,149 @@ createOortCloud();
 // Planets and Dwarf Planets
 const celestialBodies = [
   {
-    name: "Mercury",
-    size: 0.5,
-    dist: 8,
+    name: "Меркурий",
+    size: 0.38,
+    dist: 14,
     speed: 0.0041,
     initialAngle: 2.1,
     texture: "mercury.jpg",
-    roughness: 1, 
+    roughness: 1,
     metalness: 0.02,
     type: "planet",
-    info: "Closest planet to the Sun. Surface temperatures range from -173°C to 427°C. Has no atmosphere and no moons.",
-    discoveryYear: "Ancient",
+    info: "Ближайшая к Солнцу планета. Температура поверхности колеблется от −173 °C ночью до 427 °C днем. Полноценной атмосферы нет (есть крайне разреженная экзосфера), спутников тоже нет. Солнечные сутки длятся 176 земных дней.",
+    discoveryYear: "Древность",
+    realDistAU: 0.387,
+    realPeriod: "87.97 days",
+    realDiameterKm: 4879,
+    realSizeVsEarth: "0.38×",
     moons: []
   },
   {
-    name: "Venus",
-    size: 0.9,
-    dist: 11,
+    name: "Венера",
+    size: 0.95,
+    dist: 18,
     speed: 0.0016,
     initialAngle: 4.8,
     texture: "venus.jpg",
     roughness: 0.6,
     metalness: 0.05,
     type: "planet",
-    info: "Hottest planet in our solar system with surface temperatures of 462°C. Has a thick, toxic atmosphere of carbon dioxide.",
-    discoveryYear: "Ancient",
+    info: "Самая горячая планета с температурой поверхности 462 °C, горячее Меркурия. Плотная атмосфера CO₂ создает неуправляемый парниковый эффект. Вращается ретроградно — Солнце восходит на западе.",
+    discoveryYear: "Древность",
+    realDistAU: 0.723,
+    realPeriod: "224.7 days",
+    realDiameterKm: 12104,
+    realSizeVsEarth: "0.95×",
     moons: []
   },
   {
-    name: "Earth",
-    size: 1,
-    dist: 15,
+    name: "Земля",
+    size: 1.0,
+    dist: 20,
     speed: 0.001,
     initialAngle: 3.45,
     texture: "earth.jpg",
-    roughness: 0.5, 
+    roughness: 0.5,
     metalness: 0.01,
     type: "planet",
-    info: "The only known planet with life. 71% of surface covered by water. Has one natural satellite.",
-    discoveryYear: "N/A",
+    info: "Единственная подтвержденная планета с жизнью. 71 % поверхности покрыто жидкой водой. Большая Луна стабилизирует осевой наклон, обеспечивая относительно стабильный климат.",
+    discoveryYear: "Н/Д",
+    realDistAU: 1.0,
+    realPeriod: "365.25 days",
+    realDiameterKm: 12742,
+    realSizeVsEarth: "1.0× (reference)",
     moons: [
-      { name: "Moon", size: 0.27, dist: 2.5, speed: 0.037, color: new THREE.Color(0.53, 0.53, 0.53), info: "Earth's only natural satellite. Formed 4.5 billion years ago.", initialAngle: 1.2 }
+      { name: "Луна", size: 0.27, dist: 2.5, speed: 0.037, color: new THREE.Color(0.53, 0.53, 0.53), info: "Единственный естественный спутник Земли. Диаметр 3 474 км (0.27× Земли). Сформировалась около 4.5 млрд лет назад после гигантского столкновения. Приливно заблокирована.", initialAngle: 1.2 }
     ]
   },
   {
-    name: "Mars",
-    size: 0.8,
-    dist: 19,
+    name: "Марс",
+    size: 0.53,
+    dist: 24,
     speed: 0.00053,
     initialAngle: 0.9,
     texture: "mars.jpg",
     roughness: 0.75,
     metalness: 0.02,
     type: "planet",
-    info: "The Red Planet. Has the largest volcano (Olympus Mons) and canyon (Valles Marineris) in the solar system.",
-    discoveryYear: "Ancient",
+    info: "Красная планета. Здесь находятся Олимп Монс — самый высокий вулкан Солнечной системы (21,9 км), и Долины Маринера — система каньонов длиной 4 000 км. Тонкая атмосфера CO₂.",
+    discoveryYear: "Древность",
+    realDistAU: 1.524,
+    realPeriod: "1.88 years",
+    realDiameterKm: 6779,
+    realSizeVsEarth: "0.53×",
     moons: [
-      { name: "Phobos", size: 0.05, dist: 1.5, speed: 0.32, color: new THREE.Color(0.4, 0.26, 0.13), info: "Largest moon of Mars. Orbits Mars 3 times per day.", initialAngle: 0.5 },
-      { name: "Deimos", size: 0.03, dist: 2.2, speed: 0.08, color: new THREE.Color(0.4, 0.26, 0.13), info: "Smaller, outer moon of Mars. Takes 30 hours to orbit Mars.", initialAngle: 2.1 }
+      { name: "Фобос", size: 0.05, dist: 1.5, speed: 0.32, color: new THREE.Color(0.4, 0.26, 0.13), info: "Крупнейший спутник Марса. Средний диаметр 22,2 км. Обходит Марс 3 раза в сутки. Медленно спирально приближается — через ~50 млн лет разрушится или упадет на Марс.", initialAngle: 0.5 },
+      { name: "Деймос", size: 0.03, dist: 2.2, speed: 0.08, color: new THREE.Color(0.4, 0.26, 0.13), info: "Меньший внешний спутник Марса. Средний диаметр 12,4 км. Орбитальный период 30,3 часа. Вероятно, захваченный астероид C-типа.", initialAngle: 2.1 }
     ]
   },
   {
-    name: "Vesta",
-    size: 0.15,
-    dist: 20.5,
+    name: "Веста",
+    size: 0.12,
+    dist: 28,
     speed: 0.00029,
     initialAngle: 5.2,
     color: new THREE.Color(0.8, 0.8, 0.8),
     roughness: 1.0,
     metalness: 0.1,
     type: "asteroid",
-    info: "Second-largest asteroid. Has a differentiated interior with basaltic surface. Visited by Dawn spacecraft.",
+    info: "Второй по массе объект в поясе астероидов (после Цереры). Имеет дифференцированное внутреннее строение с базальтовой корой. Исследован аппаратом NASA Dawn в 2011–2012 гг.",
     discoveryYear: "1807",
+    realDistAU: 2.36,
+    realPeriod: "3.63 years",
+    realDiameterKm: 525,
+    realSizeVsEarth: "0.041×",
     moons: []
   },
   {
-    name: "Pallas",
-    size: 0.12,
-    dist: 21.2,
+    name: "Паллада",
+    size: 0.10,
+    dist: 30,
     speed: 0.00022,
     initialAngle: 1.8,
     color: new THREE.Color(0.67, 0.67, 0.67),
     roughness: 1.0,
     metalness: 0.05,
     type: "asteroid",
-    info: "Third-largest asteroid. Highly inclined orbit. Possibly a protoplanet.",
+    info: "Третий по объему астероид. Сильно наклоненная орбита (~34°) затрудняет исследования. Вероятно, остаток протопланеты ранней Солнечной системы.",
     discoveryYear: "1802",
+    realDistAU: 2.77,
+    realPeriod: "4.62 years",
+    realDiameterKm: 512,
+    realSizeVsEarth: "0.040×",
     moons: []
   },
   {
-    name: "Jupiter",
-    size: 2,
-    dist: 25,
+    name: "Юпитер",
+    size: 4.0,
+    dist: 39,
     speed: 0.000084,
     initialAngle: 2.7,
     texture: "jupiter.jpg",
     roughness: 0.9,
     metalness: 0.0,
     type: "planet",
-    info: "Largest planet in our solar system. Great Red Spot is a storm larger than Earth. Has 95 known moons.",
-    discoveryYear: "Ancient",
+    info: "Крупнейшая планета — внутри поместится 1 321 Земля. Большое красное пятно — шторм шире Земли, бушующий не менее 350 лет. Имеет 95 известных спутников и служит гравитационным щитом внутренней Солнечной системы.",
+    discoveryYear: "Древность",
+    realDistAU: 5.203,
+    realPeriod: "11.86 years",
+    realDiameterKm: 139820,
+    realSizeVsEarth: "10.97×",
     moons: [
-      { name: "Io", size: 0.15, dist: 3.5, speed: 0.56, color: new THREE.Color(1.0, 1.0, 0.6), info: "Most volcanically active body in the solar system.", initialAngle: 0.8 },
-      { name: "Europa", size: 0.13, dist: 4.2, speed: 0.28, color: new THREE.Color(0.53, 0.81, 0.92), info: "Ice-covered moon with subsurface ocean. Potential for life.", initialAngle: 1.5 },
-      { name: "Ganymede", size: 0.22, dist: 5.1, speed: 0.14, color: new THREE.Color(0.55, 0.49, 0.42), info: "Largest moon in the solar system. Has its own magnetic field.", initialAngle: 3.2 },
-      { name: "Callisto", size: 0.20, dist: 6.0, speed: 0.06, color: new THREE.Color(0.41, 0.41, 0.41), info: "Most heavily cratered body in the solar system.", initialAngle: 4.9 },
-      { name: "Amalthea", size: 0.08, dist: 2.8, speed: 2.0, color: new THREE.Color(0.6, 0.4, 0.2), info: "Fifth largest moon of Jupiter. Irregular potato shape.", initialAngle: 5.2 },
-      { name: "Himalia", size: 0.05, dist: 7.5, speed: 0.013, color: new THREE.Color(0.5, 0.5, 0.5), info: "Largest irregular moon of Jupiter.", initialAngle: 2.1 },
-      { name: "Lysithea", size: 0.02, dist: 8.2, speed: 0.010, color: new THREE.Color(0.4, 0.4, 0.4), info: "Small irregular moon in Jupiter's prograde group.", initialAngle: 4.7 },
-      { name: "Elara", size: 0.03, dist: 8.0, speed: 0.011, color: new THREE.Color(0.45, 0.45, 0.45), info: "Irregular moon discovered in 1905.", initialAngle: 1.8 }
+      { name: "Амальтея", size: 0.06, dist: 5.5, speed: 2.0, color: new THREE.Color(0.6, 0.4, 0.2), info: "Пятый по размеру спутник Юпитера. Неправильная «картофелеобразная» форма, длина около 262 км. Излучает больше тепла, чем получает от Солнца.", initialAngle: 5.2 },
+      { name: "Ио", size: 0.29, dist: 7.0, speed: 0.56, color: new THREE.Color(1.0, 1.0, 0.6), info: "Самое вулканически активное тело Солнечной системы. Приливный разогрев от Юпитера питает сотни действующих вулканов. Диаметр 3 642 км.", initialAngle: 0.8 },
+      { name: "Европа", size: 0.25, dist: 8.5, speed: 0.28, color: new THREE.Color(0.53, 0.81, 0.92), info: "Ледяной спутник с подповерхностным океаном жидкой воды — один из лучших кандидатов на внеземную жизнь. Диаметр 3 122 км.", initialAngle: 1.5 },
+      { name: "Ганимед", size: 0.41, dist: 10.5, speed: 0.14, color: new THREE.Color(0.55, 0.49, 0.42), info: "Крупнейший спутник Солнечной системы (5 268 км — больше Меркурия). Имеет собственное магнитное поле и подповерхностный океан.", initialAngle: 3.2 },
+      { name: "Каллисто", size: 0.38, dist: 12.0, speed: 0.06, color: new THREE.Color(0.41, 0.41, 0.41), info: "Наиболее покрытое кратерами тело Солнечной системы. Диаметр 4 821 км. Внутренняя активность слабая — поверхности около 4 млрд лет.", initialAngle: 4.9 },
+      { name: "Гималия", size: 0.05, dist: 15.0, speed: 0.013, color: new THREE.Color(0.5, 0.5, 0.5), info: "Крупнейший неправильный спутник Юпитера, около 170 км в поперечнике. Часть прямой группы Гималии из захваченных астероидов.", initialAngle: 2.1 },
+      { name: "Лиситея", size: 0.02, dist: 16.4, speed: 0.010, color: new THREE.Color(0.4, 0.4, 0.4), info: "Небольшой неправильный спутник (~36 км). Участник прямой группы Гималии. Орбитальный период ~259 дней.", initialAngle: 4.7 },
+      { name: "Элара", size: 0.03, dist: 16.0, speed: 0.011, color: new THREE.Color(0.45, 0.45, 0.45), info: "Неправильный спутник шириной ~80 км. Открыт в 1905 году Чарльзом Перрином. Участник группы Гималии.", initialAngle: 1.8 }
     ]
   },
   {
-    name: "Saturn",
-    size: 1.7,
-    dist: 31,
+    name: "Сатурн",
+    size: 3.4,
+    dist: 51,
     speed: 0.000034,
     initialAngle: 5.8,
     texture: "saturn.jpg",
@@ -962,258 +981,302 @@ const celestialBodies = [
     roughness: 0.9,
     metalness: 0.0,
     type: "planet",
-    info: "Famous for its prominent ring system. Less dense than water. Has 146 known moons.",
-    discoveryYear: "Ancient",
+    info: "Вторая по размеру планета. Система колец простирается до 282 000 км от планеты, но ее толщина всего около 10 м. Сатурн менее плотный, чем вода — он бы плавал. Имеет 146 известных спутников.",
+    discoveryYear: "Древность",
+    realDistAU: 9.537,
+    realPeriod: "29.46 years",
+    realDiameterKm: 116460,
+    realSizeVsEarth: "9.14×",
     moons: [
-      { name: "Mimas", size: 0.06, dist: 2.8, speed: 1.05, color: new THREE.Color(0.7, 0.7, 0.7), info: "Death Star-like appearance with giant Herschel crater.", initialAngle: 0.9 },
-      { name: "Enceladus", size: 0.08, dist: 3.2, speed: 0.73, color: new THREE.Color(0.94, 0.97, 1.0), info: "Ice geysers from south pole. Subsurface ocean.", initialAngle: 4.1 },
-      { name: "Tethys", size: 0.09, dist: 3.7, speed: 0.52, color: new THREE.Color(0.8, 0.8, 0.85), info: "Heavily cratered icy moon with large Odysseus crater.", initialAngle: 2.7 },
-      { name: "Dione", size: 0.09, dist: 4.1, speed: 0.37, color: new THREE.Color(0.75, 0.75, 0.8), info: "Ice cliffs and wispy terrain on trailing hemisphere.", initialAngle: 5.5 },
-      { name: "Rhea", size: 0.12, dist: 4.8, speed: 0.22, color: new THREE.Color(0.7, 0.7, 0.75), info: "Second largest moon of Saturn with thin oxygen atmosphere.", initialAngle: 1.3 },
-      { name: "Titan", size: 0.21, dist: 5.5, speed: 0.063, color: new THREE.Color(1.0, 0.65, 0.0), info: "Has thick atmosphere and liquid methane lakes.", initialAngle: 2.3 },
-      { name: "Hyperion", size: 0.04, dist: 6.2, speed: 0.048, color: new THREE.Color(0.6, 0.5, 0.4), info: "Chaotic rotation and sponge-like appearance.", initialAngle: 3.8 },
-      { name: "Iapetus", size: 0.11, dist: 7.0, speed: 0.014, color: new THREE.Color(0.3, 0.3, 0.3), info: "Two-tone coloration, dark leading hemisphere.", initialAngle: 0.5 },
-      { name: "Phoebe", size: 0.03, dist: 8.5, speed: 0.006, color: new THREE.Color(0.25, 0.25, 0.25), info: "Retrograde irregular moon, likely captured asteroid.", initialAngle: 4.9 }
+      { name: "Мимас", size: 0.05, dist: 5.6, speed: 1.05, color: new THREE.Color(0.7, 0.7, 0.7), info: "Диаметр 396 км. Гигантский кратер Гершель придает ему сходство со «Звездой смерти». Орбитальный период 22,6 часа.", initialAngle: 0.9 },
+      { name: "Энцелад", size: 0.04, dist: 6.4, speed: 0.73, color: new THREE.Color(0.94, 0.97, 1.0), info: "Диаметр 504 км. Активные гейзеры у южного полюса выбрасывают водяной пар в космос, подпитывая E-кольцо Сатурна. Имеет глобальный подповерхностный океан.", initialAngle: 4.1 },
+      { name: "Тефия", size: 0.08, dist: 7.4, speed: 0.52, color: new THREE.Color(0.8, 0.8, 0.85), info: "Диаметр 1 062 км. Почти полностью состоит из водяного льда. Имеет огромный кратер Одиссей (шириной 400 км).", initialAngle: 2.7 },
+      { name: "Диона", size: 0.09, dist: 8.2, speed: 0.37, color: new THREE.Color(0.75, 0.75, 0.8), info: "Диаметр 1 123 км. На заднем полушарии видны яркие ледяные утесы и «пушистый» рельеф. Возможна тонкая кислородная экзосфера.", initialAngle: 5.5 },
+      { name: "Рея", size: 0.12, dist: 9.6, speed: 0.22, color: new THREE.Color(0.7, 0.7, 0.75), info: "Второй по размеру спутник Сатурна (1 528 км). Имеет разреженную атмосферу кислорода и CO₂ — первое прямое обнаружение кислорода вокруг другого мира.", initialAngle: 1.3 },
+      { name: "Титан", size: 0.40, dist: 11.5, speed: 0.063, color: new THREE.Color(1.0, 0.65, 0.0), info: "Диаметр 5 151 км — больше Меркурия. Единственный спутник с плотной атмосферой (1,45× давления Земли) и стабильными поверхностными жидкостями: озерами и морями жидкого метана и этана.", initialAngle: 2.3 },
+      { name: "Гиперион", size: 0.04, dist: 12.5, speed: 0.048, color: new THREE.Color(0.6, 0.5, 0.4), info: "Неправильная «губчатая» форма (~270 км). Хаотическое кувыркающееся вращение — первое известное хаотически вращающееся естественное тело.", initialAngle: 3.8 },
+      { name: "Япет", size: 0.11, dist: 14.0, speed: 0.014, color: new THREE.Color(0.3, 0.3, 0.3), info: "Диаметр 1 469 км. Известен двухцветной окраской: одно полушарие темное как уголь, другое яркое как снег. Орбитальный период 79,3 дня.", initialAngle: 0.5 },
+      { name: "Феба", size: 0.03, dist: 17.0, speed: 0.006, color: new THREE.Color(0.25, 0.25, 0.25), info: "Диаметр 213 км. Ретроградный неправильный спутник — почти наверняка захваченный объект пояса Койпера. Обращается вокруг Сатурна примерно за 550 дней.", initialAngle: 4.9 }
     ]
   },
   {
-    name: "Uranus",
-    size: 1.2,
-    dist: 37,
+    name: "Уран",
+    size: 1.9,
+    dist: 71,
     speed: 0.000012,
     initialAngle: 1.2,
     texture: "uranus.jpg",
     roughness: 0.85,
     metalness: 0.0,
     type: "planet",
-    info: "Ice giant tilted on its side (98° axial tilt). Has faint rings and 28 known moons.",
+    info: "Ледяной гигант, наклоненный на 97,8° на бок — фактически катится вокруг Солнца. Каждый полюс переживает 42 года непрерывного света, затем 42 года темноты. Имеет 13 тусклых колец и 28 известных спутников.",
     discoveryYear: "1781",
+    realDistAU: 19.19,
+    realPeriod: "84.01 years",
+    realDiameterKm: 50724,
+    realSizeVsEarth: "3.98×",
     moons: [
-      { name: "Ariel", size: 0.08, dist: 2.2, speed: 0.39, color: new THREE.Color(0.6, 0.6, 0.65), info: "Youngest surface among Uranian moons with fault valleys.", initialAngle: 2.1 },
-      { name: "Umbriel", size: 0.08, dist: 2.5, speed: 0.23, color: new THREE.Color(0.4, 0.4, 0.45), info: "Darkest of Uranus's major moons.", initialAngle: 4.8 },
-      { name: "Titania", size: 0.11, dist: 3.0, speed: 0.12, color: new THREE.Color(0.55, 0.55, 0.6), info: "Largest moon of Uranus with deep canyons.", initialAngle: 1.7 },
-      { name: "Oberon", size: 0.10, dist: 3.4, speed: 0.075, color: new THREE.Color(0.5, 0.5, 0.55), info: "Outermost major moon with ancient cratered surface.", initialAngle: 5.3 },
-      { name: "Miranda", size: 0.06, dist: 1.8, speed: 0.67, color: new THREE.Color(0.53, 0.53, 0.53), info: "Most unusual moon with extreme geological features.", initialAngle: 3.7 },
-      { name: "Puck", size: 0.03, dist: 1.5, speed: 1.18, color: new THREE.Color(0.45, 0.45, 0.5), info: "Small irregular moon discovered by Voyager 2.", initialAngle: 0.8 }
+      { name: "Пак", size: 0.03, dist: 2.3, speed: 1.18, color: new THREE.Color(0.45, 0.45, 0.5), info: "Диаметр 162 км. Открыт Voyager 2 в 1985 году. Темный, примерно сферический внутренний спутник.", initialAngle: 0.8 },
+      { name: "Миранда", size: 0.04, dist: 2.7, speed: 0.67, color: new THREE.Color(0.53, 0.53, 0.53), info: "Самый маленький крупный спутник Урана (472 км). Имеет самый высокий известный обрыв в Солнечной системе — Верона Рупес, около 20 км.", initialAngle: 3.7 },
+      { name: "Ариэль", size: 0.09, dist: 3.5, speed: 0.39, color: new THREE.Color(0.6, 0.6, 0.65), info: "Диаметр 1 158 км. Самая «молодая» поверхность среди спутников Урана, с разломными долинами и возможным криовулканизмом.", initialAngle: 2.1 },
+      { name: "Умбриэль", size: 0.09, dist: 4.0, speed: 0.23, color: new THREE.Color(0.4, 0.4, 0.45), info: "Диаметр 1 169 км. Самый темный из крупных спутников Урана. Древняя, сильно кратерированная поверхность указывает на слабую геологическую активность.", initialAngle: 4.8 },
+      { name: "Титания", size: 0.12, dist: 4.8, speed: 0.12, color: new THREE.Color(0.55, 0.55, 0.6), info: "Крупнейший спутник Урана (1 578 км). Имеет глубокие разломные каньоны и, вероятно, состоит примерно поровну из камня и льда.", initialAngle: 1.7 },
+      { name: "Оберон", size: 0.12, dist: 5.4, speed: 0.075, color: new THREE.Color(0.5, 0.5, 0.55), info: "Самый внешний крупный спутник (1 523 км). Древняя, сильно кратерированная поверхность. У некоторых кратеров яркий выброс и темное дно.", initialAngle: 5.3 }
     ]
   },
   {
-    name: "Neptune",
-    size: 1.1,
-    dist: 42,
+    name: "Нептун",
+    size: 1.85,
+    dist: 87,
     speed: 0.0000061,
     initialAngle: 6.1,
     texture: "neptune.jpg",
     roughness: 0.85,
     metalness: 0.0,
     type: "planet",
-    info: "Windiest planet with speeds up to 2,100 km/h. Deep blue color from methane in atmosphere.",
+    info: "Самая далекая планета. Самые быстрые ветры в Солнечной системе — до 2 100 км/ч. Глубокий синий цвет обусловлен атмосферным метаном. Имеет 16 известных спутников. Была предсказана математически до наблюдения.",
     discoveryYear: "1846",
+    realDistAU: 30.07,
+    realPeriod: "164.8 years",
+    realDiameterKm: 49244,
+    realSizeVsEarth: "3.87×",
     moons: [
-      { name: "Triton", size: 0.11, dist: 3.0, speed: 0.17, color: new THREE.Color(0.53, 0.81, 0.92), info: "Largest moon of Neptune. Orbits retrograde. Nitrogen geysers.", initialAngle: 0.9 },
-      { name: "Nereid", size: 0.02, dist: 4.8, speed: 0.003, color: new THREE.Color(0.5, 0.5, 0.5), info: "Highly eccentric orbit, likely captured Kuiper Belt object.", initialAngle: 3.2 },
-      { name: "Proteus", size: 0.03, dist: 2.2, speed: 0.89, color: new THREE.Color(0.4, 0.4, 0.4), info: "Largest irregular-shaped moon of Neptune.", initialAngle: 5.7 },
-      { name: "Larissa", size: 0.015, dist: 1.8, speed: 1.81, color: new THREE.Color(0.35, 0.35, 0.35), info: "Small inner moon discovered by Voyager 2.", initialAngle: 2.4 }
+      { name: "Ларисса", size: 0.02, dist: 2.5, speed: 1.81, color: new THREE.Color(0.35, 0.35, 0.35), info: "Диаметр ~194 км. Небольшой внутренний спутник, открытый Voyager 2. Обращается внутри кольца Адамса Нептуна.", initialAngle: 2.4 },
+      { name: "Протей", size: 0.03, dist: 3.7, speed: 0.89, color: new THREE.Color(0.4, 0.4, 0.4), info: "Диаметр 420 км. Крупнейший спутник Нептуна неправильной формы. Почти черный, как уголь. Открыт Voyager 2 в 1989 году.", initialAngle: 5.7 },
+      { name: "Тритон", size: 0.21, dist: 5.5, speed: 0.17, color: new THREE.Color(0.53, 0.81, 0.92), info: "Диаметр 2 707 км. Единственный крупный спутник Солнечной системы с ретроградной орбитой — почти наверняка захваченный объект пояса Койпера. Имеет азотные гейзеры и медленно приближается к Нептуну.", initialAngle: 0.9 },
+      { name: "Нереида", size: 0.03, dist: 8.5, speed: 0.003, color: new THREE.Color(0.5, 0.5, 0.5), info: "Диаметр ~340 км. Имеет одну из самых эксцентричных орбит среди известных спутников — расстояние до Нептуна меняется в 7,5 раза.", initialAngle: 3.2 }
     ]
   },
   {
-    name: "Ceres",
-    size: 0.3,
-    dist: 22,
+    name: "Церера",
+    size: 0.22,
+    dist: 30,
     speed: 0.00022,
     color: new THREE.Color(0.6, 0.6, 0.6),
     roughness: 1.0,
     metalness: 0.0,
     type: "dwarf",
-    info: "Largest object in asteroid belt. Has water ice and possible subsurface ocean. Visited by Dawn spacecraft.",
+    info: "Крупнейший объект в поясе астероидов и единственная карликовая планета внутренней Солнечной системы. Имеет залежи водяного льда и яркие соляные отложения (факулы кратера Оккатор). Исследована аппаратом NASA Dawn в 2015–2018 гг.",
     discoveryYear: "1801",
+    realDistAU: 2.77,
+    realPeriod: "4.60 years",
+    realDiameterKm: 945,
+    realSizeVsEarth: "0.074×",
     moons: []
   },
   {
-    name: "Pluto",
-    size: 0.4,
-    dist: 48,
+    name: "Плутон",
+    size: 0.20,
+    dist: 99,
     speed: 0.000004,
     initialAngle: 5.3,
     color: new THREE.Color(0.82, 0.71, 0.55),
     roughness: 1.0,
     metalness: 0.0,
     type: "dwarf",
-    info: "Former ninth planet. Has heart-shaped nitrogen plains. Binary system with Charon.",
+    info: "В 2006 году переклассифицирована как карликовая планета. Имеет область Томбо — равнину азотного льда в форме сердца шириной 1 600 км. Образует двойную систему со спутником Хароном. Исследована New Horizons в 2015 году.",
     discoveryYear: "1930",
+    realDistAU: 39.48,
+    realPeriod: "248 years",
+    realDiameterKm: 2376,
+    realSizeVsEarth: "0.19×",
     moons: [
-      { name: "Charon", size: 0.2, dist: 1.8, speed: 0.16, color: new THREE.Color(0.5, 0.5, 0.5), info: "Largest moon relative to its parent planet. Tidally locked to Pluto.", initialAngle: 1.8 }
+      { name: "Харон", size: 0.2, dist: 1.8, speed: 0.16, color: new THREE.Color(0.5, 0.5, 0.5), info: "Диаметр 1 212 км — более половины размера Плутона, что делает его крупнейшим спутником относительно своей планеты. Приливно синхронизирован с Плутоном. Красноватый северный полюс может быть связан с захваченными газами атмосферы Плутона.", initialAngle: 1.8 }
     ]
   },
   {
-    name: "Eris",
-    size: 0.35,
-    dist: 52,
+    name: "Эрида",
+    size: 0.20,
+    dist: 125,
     speed: 0.0000018,
     initialAngle: 2.7,
     color: new THREE.Color(0.9, 0.9, 0.98),
     roughness: 1.0,
     metalness: 0.0,
     type: "dwarf",
-    info: "Most massive dwarf planet. Discovery led to Pluto's reclassification. Very reflective surface.",
+    info: "Самая массивная известная карликовая планета — немного меньше Плутона по объему, но на 27 % массивнее. Ее открытие напрямую привело к переклассификации Плутона. Сильно отражающая поверхность из метанового льда.",
     discoveryYear: "2005",
+    realDistAU: 67.9,
+    realPeriod: "559 years",
+    realDiameterKm: 2326,
+    realSizeVsEarth: "0.18×",
     moons: [
-      { name: "Dysnomia", size: 0.04, dist: 2.0, speed: 0.067, color: new THREE.Color(0.6, 0.6, 0.6), info: "Only known moon of Eris.", initialAngle: 4.5 }
+      { name: "Дисномия", size: 0.04, dist: 2.0, speed: 0.067, color: new THREE.Color(0.6, 0.6, 0.6), info: "Единственный известный спутник Эриды. Диаметр ~700 км. Орбитальный период ~15,8 дня.", initialAngle: 4.5 }
     ]
   },
   {
-    name: "Makemake",
-    size: 0.25,
-    dist: 50,
+    name: "Макемаке",
+    size: 0.15,
+    dist: 106,
     speed: 0.0000032,
     initialAngle: 1.9,
     color: new THREE.Color(0.55, 0.27, 0.07),
     roughness: 1.0,
     metalness: 0.0,
     type: "dwarf",
-    info: "Third-largest dwarf planet. Reddish surface likely due to organic compounds. No atmosphere.",
+    info: "Третья по величине известная карликовая планета. Красноватый цвет, вероятно, обусловлен толинами (сложной органикой) на поверхности. Постоянной атмосферы нет. Имеет один небольшой спутник, открытый в 2016 году.",
     discoveryYear: "2005",
+    realDistAU: 45.79,
+    realPeriod: "309.9 years",
+    realDiameterKm: 1430,
+    realSizeVsEarth: "0.11×",
     moons: [
-      { name: "MK 2", size: 0.02, dist: 1.5, speed: 0.083, color: new THREE.Color(0.4, 0.4, 0.4), info: "Small, dark moon of Makemake.", initialAngle: 0.7 }
+      { name: "MK 2", size: 0.02, dist: 1.5, speed: 0.083, color: new THREE.Color(0.4, 0.4, 0.4), info: "Небольшой очень темный спутник Макемаке. Диаметр ~175 км. Орбитальный период ~12,4 дня. Открыт «Хабблом» в 2016 году.", initialAngle: 0.7 }
     ]
   },
   {
-    name: "Haumea",
-    size: 0.28,
-    dist: 51,
+    name: "Хаумеа",
+    size: 0.17,
+    dist: 104,
     speed: 0.0000035,
     initialAngle: 4.2,
     color: new THREE.Color(1.0, 1.0, 1.0),
     roughness: 0.8,
     metalness: 0.1,
     type: "dwarf",
-    info: "Elongated dwarf planet that spins every 4 hours. Has ring system and crystalline water ice surface.",
+    info: "Уникальная вытянутая форма (эллипсоид ~2 100 × 1 680 × 1 074 км) — вызвана быстрым вращением за 3,9 часа, самым быстрым среди крупных тел Солнечной системы. Имеет систему колец и поверхность из кристаллического водяного льда.",
     discoveryYear: "2004",
+    realDistAU: 43.16,
+    realPeriod: "283.3 years",
+    realDiameterKm: 1560,
+    realSizeVsEarth: "0.12×",
     moons: [
-      { name: "Hi'iaka", size: 0.05, dist: 2.2, speed: 0.02, color: new THREE.Color(0.87, 0.87, 0.87), info: "Larger moon of Haumea.", initialAngle: 2.9 },
-      { name: "Namaka", size: 0.03, dist: 1.8, speed: 0.056, color: new THREE.Color(0.8, 0.8, 0.8), info: "Smaller, inner moon of Haumea.", initialAngle: 5.1 }
+      { name: "Хииака", size: 0.05, dist: 2.2, speed: 0.02, color: new THREE.Color(0.87, 0.87, 0.87), info: "Больший спутник Хаумеа (~320 км). Орбитальный период 49,1 дня. Назван в честь гавайской богини.", initialAngle: 2.9 },
+      { name: "Намака", size: 0.03, dist: 1.8, speed: 0.056, color: new THREE.Color(0.8, 0.8, 0.8), info: "Меньший внутренний спутник Хаумеа (~170 км). Орбитальный период 18,3 дня. Оба спутника, вероятно, являются ледяными фрагментами древнего столкновения.", initialAngle: 5.1 }
     ]
   },
   {
-    name: "Sedna",
-    size: 0.2,
-    dist: 65,
+    name: "Седна",
+    size: 0.13,
+    dist: 148,
     speed: 0.00000009,
     initialAngle: 0.1,
     color: new THREE.Color(0.55, 0.0, 0.0),
     roughness: 1.0,
     metalness: 0.0,
     type: "dwarf",
-    info: "Extremely distant object in extended scattered disk. Takes 11,400 years to orbit the Sun.",
+    info: "Один из самых удаленных известных крупных транснептуновых объектов с очень вытянутой орбитой (большая полуось ~506 а.е.). Один оборот вокруг Солнца занимает ~11 400 лет. Темно-красный цвет; объект часто связывают с внутренним облаком Оорта. Подтвержденных спутников нет.",
     discoveryYear: "2003",
+    realDistAU: 506,
+    realPeriod: "~11,400 years",
+    realDiameterKm: 995,
+    realSizeVsEarth: "0.078×",
     moons: []
   },
   {
-    name: "Quaoar",
-    size: 0.18,
-    dist: 54,
+    name: "Квавар",
+    size: 0.14,
+    dist: 104,
     speed: 0.0000035,
     initialAngle: 3.1,
     color: new THREE.Color(0.4, 0.26, 0.13),
     roughness: 1.0,
     metalness: 0.0,
     type: "dwarf",
-    info: "Classical Kuiper Belt object. Has ring system and one known moon.",
+    info: "Классический объект пояса Койпера. Неожиданно имеет систему колец на расстоянии 4 100 км — за пределом Роша, что ставит под сомнение теории образования колец. Один известный спутник — Вейвот.",
     discoveryYear: "2002",
+    realDistAU: 43.4,
+    realPeriod: "285.5 years",
+    realDiameterKm: 1121,
+    realSizeVsEarth: "0.088×",
     moons: [
-      { name: "Weywot", size: 0.02, dist: 1.6, speed: 0.083, color: new THREE.Color(0.33, 0.33, 0.33), info: "Moon of Quaoar.", initialAngle: 1.3 }
+      { name: "Вейвот", size: 0.02, dist: 1.6, speed: 0.083, color: new THREE.Color(0.33, 0.33, 0.33), info: "Спутник Квавара, размер около 170 км. Орбитальный период ~12,4 дня. Открыт в 2007 году.", initialAngle: 1.3 }
     ]
   },
   {
-    name: "Orcus",
-    size: 0.16,
-    dist: 49,
+    name: "Орк",
+    size: 0.13,
+    dist: 99,
     speed: 0.000004,
     initialAngle: 5.7,
     color: new THREE.Color(0.18, 0.31, 0.31),
     roughness: 1.0,
     metalness: 0.0,
     type: "dwarf",
-    info: "Plutino in 2:3 resonance with Neptune. Sometimes called 'anti-Pluto'.",
+    info: "Плутино в резонансе 2:3 с Нептуном (как у Плутона), иногда называется «анти-Плутон», потому что на орбите всегда находится напротив Плутона. Имеет крупный спутник Вант.",
     discoveryYear: "2004",
+    realDistAU: 39.2,
+    realPeriod: "245.5 years",
+    realDiameterKm: 910,
+    realSizeVsEarth: "0.071×",
     moons: [
-      { name: "Vanth", size: 0.06, dist: 1.9, speed: 0.1, color: new THREE.Color(0.27, 0.27, 0.27), info: "Large moon of Orcus.", initialAngle: 4.8 }
+      { name: "Вант", size: 0.06, dist: 1.9, speed: 0.1, color: new THREE.Color(0.27, 0.27, 0.27), info: "Крупный спутник Орка (~380 км). Орбитальный период ~9,5 дня. Отношение масс Вант/Орк — одно из самых больших среди известных.", initialAngle: 4.8 }
     ]
   },
   {
-    name: "Gonggong",
-    size: 0.19,
-    dist: 56,
+    name: "Гунгун",
+    size: 0.14,
+    dist: 125,
     speed: 0.0000018,
     initialAngle: 2.4,
     color: new THREE.Color(0.5, 0.0, 0.13),
     roughness: 1.0,
     metalness: 0.0,
     type: "dwarf",
-    info: "Red-colored scattered disk object. Has slow rotation period of 22 hours.",
+    info: "Темно-красный объект рассеянного диска в резонансе 3:10 с Нептуном. Период вращения ~22 часа. Красный цвет, вероятно, обусловлен сложной органикой (толинами) на поверхности.",
     discoveryYear: "2007",
+    realDistAU: 67.0,
+    realPeriod: "552 years",
+    realDiameterKm: 1230,
+    realSizeVsEarth: "0.097×",
     moons: [
-      { name: "Xiangliu", size: 0.03, dist: 1.7, speed: 0.1, color: new THREE.Color(0.4, 0.4, 0.4), info: "Moon of Gonggong.", initialAngle: 3.8 }
+      { name: "Сянлю", size: 0.03, dist: 1.7, speed: 0.1, color: new THREE.Color(0.4, 0.4, 0.4), info: "Спутник Гунгуна (~300 км). Также очень красный. Орбитальный период ~25,2 дня.", initialAngle: 3.8 }
     ]
   },
   {
-    name: "Varuna",
-    size: 0.12,
-    dist: 53,
+    name: "Варуна",
+    size: 0.10,
+    dist: 104,
     speed: 0.0000027,
     initialAngle: 4.7,
     color: new THREE.Color(0.41, 0.41, 0.41),
     roughness: 1.0,
     metalness: 0.0,
     type: "tno",
-    info: "Large classical Kuiper Belt object. Elongated shape with rapid rotation.",
+    info: "Крупный классический объект пояса Койпера. Вытянутая форма вызвана быстрым вращением за 6,3 часа. Вероятно, контактная двойная система или сильно деформированное тело.",
     discoveryYear: "2000",
+    realDistAU: 43.1,
+    realPeriod: "283 years",
+    realDiameterKm: 668,
+    realSizeVsEarth: "0.052×",
     moons: []
   },
   {
-    name: "Ixion",
-    size: 0.11,
-    dist: 49.5,
+    name: "Иксион",
+    size: 0.09,
+    dist: 99,
     speed: 0.000004,
     initialAngle: 0.8,
     color: new THREE.Color(0.55, 0.27, 0.07),
     roughness: 1.0,
     metalness: 0.0,
     type: "tno",
-    info: "Plutino with very red surface. May have experienced thermal evolution.",
+    info: "Плутино в резонансе 2:3 с Нептуном. Очень красная поверхность указывает на богатый толинами состав. Кандидат в карликовые планеты с диаметром ~617 км.",
     discoveryYear: "2001",
+    realDistAU: 39.6,
+    realPeriod: "249.3 years",
+    realDiameterKm: 617,
+    realSizeVsEarth: "0.048×",
     moons: []
   },
   {
-    name: "Salacia",
-    size: 0.13,
-    dist: 50.3,
+    name: "Салация",
+    size: 0.10,
+    dist: 102,
     speed: 0.0000035,
     initialAngle: 2.9,
     color: new THREE.Color(0.6, 0.6, 0.65),
     roughness: 1.0,
     metalness: 0.0,
     type: "tno",
-    info: "Large trans-Neptunian object with a known moon.",
+    info: "Крупный транснептуновый объект с необычно низким альбедо (отражательной способностью). Двойная система со спутником Актеей. Диаметр ~846 км.",
     discoveryYear: "2004",
+    realDistAU: 42.2,
+    realPeriod: "274.0 years",
+    realDiameterKm: 846,
+    realSizeVsEarth: "0.066×",
     moons: [
-      { name: "Actaea", size: 0.04, dist: 1.4, speed: 0.09, color: new THREE.Color(0.5, 0.5, 0.55), info: "Moon of Salacia, discovered in 2006.", initialAngle: 1.9 }
-    ]
-  },
-  {
-    name: "2007 OR10",
-    size: 0.16,
-    dist: 55.2,
-    speed: 0.0000019,
-    initialAngle: 3.7,
-    color: new THREE.Color(0.45, 0.15, 0.10),
-    roughness: 1.0,
-    metalness: 0.0,
-    type: "dwarf",
-    info: "One of the largest known dwarf planets, very red in color.",
-    discoveryYear: "2007",
-    moons: [
-      { name: "S/2016 (225088) 1", size: 0.025, dist: 1.6, speed: 0.08, color: new THREE.Color(0.4, 0.4, 0.4), info: "Small moon of 2007 OR10.", initialAngle: 5.1 }
+      { name: "Актея", size: 0.04, dist: 1.4, speed: 0.09, color: new THREE.Color(0.5, 0.5, 0.55), info: "Спутник Салации (~303 км). Орбитальный период ~5,5 дня. Открыт «Хабблом» в 2006 году.", initialAngle: 1.9 }
     ]
   }
 ];
@@ -1336,22 +1399,27 @@ celestialBodies.forEach((body) => {
 
   if (body.hasRings) {
     const ringTex = loader.load("/textures/saturn_ring.png");
-    const ringGeo = new THREE.RingGeometry(
-      body.size + 0.5,
-      body.size + 1.2,
-      64
-    );
+    const innerR = body.size * 1.3;
+    const outerR = body.size * 2.6;
+    const ringGeo = new THREE.RingGeometry(innerR, outerR, 128, 8);
+
+    // Fix Three.js RingGeometry UVs: map U radially (0 = inner, 1 = outer)
+    const pos = ringGeo.attributes.position;
+    const uv = ringGeo.attributes.uv;
+    const v3 = new THREE.Vector3();
+    for (let i = 0; i < pos.count; i++) {
+      v3.fromBufferAttribute(pos, i);
+      uv.setXY(i, (v3.length() - innerR) / (outerR - innerR), 0.5);
+    }
     const ringMat = new THREE.MeshBasicMaterial({
       map: ringTex,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.5,
-      alphaMap: ringTex,
+      opacity: 0.9,
+      depthWrite: false,
     });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     ring.rotation.x = Math.PI / 2;
-    ring.castShadow = true;
-    ring.receiveShadow = true;
     mesh.add(ring);
   }
 
@@ -1400,12 +1468,12 @@ composer.addPass(new RenderPass(scene, camera));
 
 const bloomPass = new UnrealBloomPass(
   new THREE.Vector2(window.innerWidth, window.innerHeight),
-  0.5,
+  0,
   0.6,
   0.05
 );
 
-bloomPass.strength = 0.5;
+bloomPass.strength = 0;
 bloomPass.radius = 0.6;
 bloomPass.threshold = 0.05;
 
@@ -1461,16 +1529,8 @@ let followingPlanet = null;
 let followOffset = new THREE.Vector3(10, 5, 10);
 let lastPlanetPosition = new THREE.Vector3();
 let userCameraOffset = new THREE.Vector3();
+let followJustStarted = false;
 
-// Eclipse Tour Variables
-let eclipseTourActive = false;
-let eclipseTourPhase = 0;
-let eclipseTourTimer = 0;
-let eclipseType = 'solar'; // 'solar' or 'lunar'
-const eclipsePhaseDuration = 12000; // 12 seconds per phase for slow cinematic pacing
-let originalEclipsePositions = {};
-let eclipseCameraPositions = [];
-let eclipseCorona = null;
 
 // Create planet labels
 function createPlanetLabels() {
@@ -1575,11 +1635,6 @@ function animate() {
   }
   frameCount++;
 
-  // Update Eclipse Tour
-  if (eclipseTourActive) {
-    updateEclipseTour();
-  }
-
   if (!isPaused) {
     let realTimeMultiplier = animationSpeed === 0 ? 0.0001 : animationSpeed;
     
@@ -1593,10 +1648,8 @@ function animate() {
     sun.rotation.y += 0.002 * realTimeMultiplier;
 
     planetMeshes.forEach((p) => {
-  // If eclipse tour active, slow orbital and rotation speeds for cinematic visuals
-  const cinematicFactor = eclipseTourActive ? 0.08 : 1.0;
-  p.pivot.rotation.y += p.speed * realTimeMultiplier * cinematicFactor;
-  p.mesh.rotation.y += 0.01 * realTimeMultiplier * cinematicFactor;
+      p.pivot.rotation.y += p.speed * realTimeMultiplier;
+      p.mesh.rotation.y += 0.01 * realTimeMultiplier;
       
       if (p.orbit && p.orbit.userData && p.orbit.userData.pulseSpeed) {
         try {
@@ -1618,10 +1671,8 @@ function animate() {
       
       if (p.moons && p.moons.length > 0) {
         p.moons.forEach((moon) => {
-          const moonCinematic = eclipseTourActive ? 0.06 : 0.1;
-          const adjustedMoonSpeed = moon.speed * moonCinematic;
-          moon.pivot.rotation.y += adjustedMoonSpeed * realTimeMultiplier;
-          moon.mesh.rotation.y += 0.02 * realTimeMultiplier * (eclipseTourActive ? 0.6 : 1.0);
+          moon.pivot.rotation.y += moon.speed * 0.1 * realTimeMultiplier;
+          moon.mesh.rotation.y += 0.02 * realTimeMultiplier;
         });
       }
     });
@@ -1633,13 +1684,13 @@ function animate() {
         asteroid.mesh.rotation.y += asteroid.rotationSpeed.y * realTimeMultiplier;
         asteroid.mesh.rotation.z += asteroid.rotationSpeed.z * realTimeMultiplier;
         
-      asteroid.angle += asteroid.orbitSpeed * realTimeMultiplier * (eclipseTourActive ? 0.06 : 1.0);
+      asteroid.angle += asteroid.orbitSpeed * realTimeMultiplier;
         asteroid.mesh.position.x = Math.cos(asteroid.angle) * asteroid.radius;
         asteroid.mesh.position.z = Math.sin(asteroid.angle) * asteroid.radius;
       });
     });
 
-      distantStars.rotation.y += 0.0001 * realTimeMultiplier * (eclipseTourActive ? 0.06 : 1.0);
+      distantStars.rotation.y += 0.0001 * realTimeMultiplier;
   }
 
   controls.update();
@@ -1649,19 +1700,18 @@ function animate() {
     followingPlanet.mesh.getWorldPosition(planetPos);
     
     if (followingType === 'sun') {
-      // For Sun following, allow zoom but maintain target
       controls.target.copy(planetPos);
-      // Don't override camera position - let controls handle zoom
     } else {
-      // For planets and moons, use original behavior
-      const planetMovement = planetPos.clone().sub(lastPlanetPosition);
-      
-      if (!lastPlanetPosition.equals(new THREE.Vector3(0, 0, 0))) {
-        camera.position.add(planetMovement);
-        controls.target.add(planetMovement);
-      } else {
+      if (followJustStarted) {
+        // First frame: snap camera to the follow position
         camera.position.copy(planetPos.clone().add(followOffset));
         controls.target.copy(planetPos);
+        followJustStarted = false;
+      } else {
+        // Subsequent frames: translate camera by the planet's movement delta
+        const planetMovement = planetPos.clone().sub(lastPlanetPosition);
+        camera.position.add(planetMovement);
+        controls.target.add(planetMovement);
       }
     }
     
@@ -1672,7 +1722,7 @@ function animate() {
   updateMoonLabels();
   
   const distanceToSun = camera.position.distanceTo(sun.position);
-  const maxDistance = 100;
+  const maxDistance = 200;
   const minDistance = 10;
   const normalizedDistance = Math.max(0, Math.min(1, (distanceToSun - minDistance) / (maxDistance - minDistance)));
   
@@ -1695,10 +1745,10 @@ function animate() {
 // Initialize real objects with error handling
 async function initializeRealObjects() {
   try {
-    console.log("Initializing real-time NASA data...");
+    console.log("Инициализация данных NASA в реальном времени...");
     await addRealAsteroids();
     await addComets();
-    console.log("Real-time NASA data initialization complete");
+    console.log("Инициализация данных NASA в реальном времени завершена");
   } catch (error) {
     console.error("Error initializing real objects:", error);
   }
@@ -1717,11 +1767,11 @@ if (speedControl && speedValue) {
   speedControl.addEventListener('input', (e) => {
     animationSpeed = parseFloat(e.target.value);
     if (animationSpeed === 0) {
-      speedValue.textContent = '0x Real Earth Time';
+      speedValue.textContent = '0x Реальное земное время';
     } else if (animationSpeed < 1) {
-      speedValue.textContent = animationSpeed.toFixed(1) + 'x Slow';
+      speedValue.textContent = animationSpeed.toFixed(1) + 'x Медленно';
     } else {
-      speedValue.textContent = animationSpeed.toFixed(1) + 'x Fast';
+      speedValue.textContent = animationSpeed.toFixed(1) + 'x Быстро';
     }
   });
 }
@@ -1748,17 +1798,17 @@ if (hideUIBtn && showUIBtn && uiControls) {
   });
 }
 
-let isBloomManual = false;
-let manualBloomStrength = 0.5;
+let isBloomManual = true;
+let manualBloomStrength = 0;
 
 const bloomControl = document.getElementById('bloomControl');
 const bloomValue = document.getElementById('bloomValue');
 if (bloomControl && bloomValue) {
   isBloomManual = true;
-  manualBloomStrength = 0.5;
-  bloomPass.strength = 0.5;
-  bloomControl.value = 0.5;
-  bloomValue.textContent = '0.5';
+  manualBloomStrength = 0;
+  bloomPass.strength = 0;
+  bloomControl.value = 0;
+  bloomValue.textContent = '0';
 
   bloomControl.addEventListener('input', (e) => {
     const strength = parseFloat(e.target.value);
@@ -1768,7 +1818,7 @@ if (bloomControl && bloomValue) {
     bloomValue.textContent = strength.toFixed(1);
     const bloomModeBtn = document.getElementById('bloomModeBtn');
     if (bloomModeBtn) {
-      bloomModeBtn.textContent = 'Auto Bloom';
+      bloomModeBtn.textContent = 'Авто-свечение';
       bloomModeBtn.classList.add('active');
     }
     console.log(`🎛️ Manual bloom set to: ${strength}`);
@@ -1779,18 +1829,18 @@ const bloomModeBtn = document.getElementById('bloomModeBtn');
 if (bloomModeBtn) {
   bloomModeBtn.addEventListener('click', () => {
     isBloomManual = !isBloomManual;
-    bloomModeBtn.textContent = isBloomManual ? 'Auto Bloom' : 'Manual Bloom';
+    bloomModeBtn.textContent = isBloomManual ? 'Авто-свечение' : 'Ручное свечение';
     bloomModeBtn.classList.toggle('active', isBloomManual);
     
     if (!isBloomManual) {
-      console.log('Switched to automatic bloom mode');
+      console.log('Переключено на автоматический режим свечения');
     } else {
-      console.log('Switched to manual bloom mode');
+      console.log('Переключено на ручной режим свечения');
       bloomPass.strength = manualBloomStrength;
     }
   });
   
-  bloomModeBtn.textContent = isBloomManual ? 'Auto Bloom' : 'Manual Bloom';
+  bloomModeBtn.textContent = isBloomManual ? 'Авто-свечение' : 'Ручное свечение';
   bloomModeBtn.classList.toggle('active', isBloomManual);
 }
 
@@ -1798,7 +1848,7 @@ const pauseBtn = document.getElementById('pauseBtn');
 if (pauseBtn) {
   pauseBtn.addEventListener('click', () => {
     isPaused = !isPaused;
-    pauseBtn.textContent = isPaused ? 'Resume' : 'Pause';
+    pauseBtn.textContent = isPaused ? 'Продолжить' : 'Пауза';
     pauseBtn.classList.toggle('active', isPaused);
   });
 }
@@ -1810,212 +1860,6 @@ if (resetBtn) {
   });
 }
 
-// Eclipse Tour buttons
-const solarEclipseTourBtn = document.getElementById('solarEclipseTourBtn');
-const lunarEclipseTourBtn = document.getElementById('lunarEclipseTourBtn');
-
-if (solarEclipseTourBtn) {
-  solarEclipseTourBtn.addEventListener('click', () => {
-    if (eclipseTourActive) {
-      stopEclipseTour();
-    } else {
-      eclipseType = 'solar';
-      startEclipseTour();
-    }
-  });
-}
-
-if (lunarEclipseTourBtn) {
-  lunarEclipseTourBtn.addEventListener('click', () => {
-    if (eclipseTourActive) {
-      stopEclipseTour();
-    } else {
-      eclipseType = 'lunar';
-      startEclipseTour();
-    }
-  });
-}
-
-// Special Events Panel Eclipse Tour Buttons
-const solarEclipseTour = document.getElementById('solarEclipseTour');
-const lunarEclipseTour = document.getElementById('lunarEclipseTour');
-
-if (solarEclipseTour) {
-  solarEclipseTour.addEventListener('click', () => {
-    if (eclipseTourActive) {
-      stopEclipseTour();
-    } else {
-      eclipseType = 'solar';
-      startEclipseTour();
-    }
-  });
-}
-
-if (lunarEclipseTour) {
-  lunarEclipseTour.addEventListener('click', () => {
-    if (eclipseTourActive) {
-      stopEclipseTour();
-    } else {
-      eclipseType = 'lunar';
-      startEclipseTour();
-    }
-  });
-}
-
-// Music controls
-const spaceMusic = document.getElementById('spaceMusic');
-const musicBtn = document.getElementById('musicBtn');
-const muteMusicBtn = document.getElementById('muteMusicBtn');
-const floatingMusicBtn = document.getElementById('floatingMusicBtn');
-const floatingMuteMusicBtn = document.getElementById('floatingMuteMusicBtn');
-const volumeControl = document.getElementById('volumeControl');
-const volumeValue = document.getElementById('volumeValue');
-
-// Ensure music loops properly
-spaceMusic.addEventListener('ended', function() {
-  this.currentTime = 0;
-  this.play();
-});
-
-let isMusicPlaying = false;
-
-let audioContext;
-let atmosphereGain;
-let oscillator1, oscillator2, oscillator3;
-
-function createAtmosphericAudio() {
-  try {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    atmosphereGain = audioContext.createGain();
-    atmosphereGain.connect(audioContext.destination);
-    atmosphereGain.gain.value = 0.3;
-    
-    oscillator1 = audioContext.createOscillator();
-    oscillator1.type = 'sine';
-    oscillator1.frequency.setValueAtTime(60, audioContext.currentTime);
-    
-    oscillator2 = audioContext.createOscillator();
-    oscillator2.type = 'triangle';
-    oscillator2.frequency.setValueAtTime(120, audioContext.currentTime);
-    
-    oscillator3 = audioContext.createOscillator();
-    oscillator3.type = 'sine';
-    oscillator3.frequency.setValueAtTime(40, audioContext.currentTime);
-    
-    const filter = audioContext.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(200, audioContext.currentTime);
-    
-    oscillator1.connect(filter);
-    oscillator2.connect(filter);
-    oscillator3.connect(filter);
-    filter.connect(atmosphereGain);
-    
-    oscillator1.start();
-    oscillator2.start();
-    oscillator3.start();
-    
-    setInterval(() => {
-      if (oscillator1 && audioContext.state === 'running') {
-        oscillator1.frequency.setValueAtTime(
-          60 + Math.sin(Date.now() * 0.001) * 5, 
-          audioContext.currentTime
-        );
-        oscillator2.frequency.setValueAtTime(
-          120 + Math.sin(Date.now() * 0.0015) * 8, 
-          audioContext.currentTime
-        );
-      }
-    }, 100);
-    
-    return true;
-  } catch (error) {
-    console.warn("Web Audio API not supported, using HTML5 audio only");
-    return false;
-  }
-}
-
-function startMusic() {
-  if (!isMusicPlaying) {
-    spaceMusic.play().then(() => {
-      console.log("Interstellar soundtrack started");
-      isMusicPlaying = true;
-      updateMusicButtonStates(true);
-    }).catch((error) => {
-      console.log("HTML5 audio failed, trying Web Audio API:", error);
-      if (createAtmosphericAudio()) {
-        isMusicPlaying = true;
-        updateMusicButtonStates(true);
-        console.log("Atmospheric audio started");
-      } else {
-        alert("🎵 Audio not available\n\nFor the best experience, try:\n• Check your browser audio settings\n• Ensure audio is not blocked\n• Try a different browser");
-      }
-    });
-  }
-}
-
-function stopMusic() {
-  if (isMusicPlaying) {
-    spaceMusic.pause();
-    spaceMusic.currentTime = 0;
-    
-    if (audioContext && audioContext.state === 'running') {
-      audioContext.suspend();
-    }
-    
-    isMusicPlaying = false;
-    updateMusicButtonStates(false);
-    console.log("Music stopped");
-  }
-}
-
-function updateMusicButtonStates(isPlaying) {
-  if (musicBtn && muteMusicBtn) {
-    musicBtn.style.display = isPlaying ? 'none' : 'inline-block';
-    muteMusicBtn.style.display = isPlaying ? 'inline-block' : 'none';
-    if (isPlaying) {
-      musicBtn.classList.add('active');
-    } else {
-      musicBtn.classList.remove('active');
-    }
-  }
-  
-  if (floatingMusicBtn && floatingMuteMusicBtn) {
-    floatingMusicBtn.style.display = isPlaying ? 'none' : 'flex';
-    floatingMuteMusicBtn.style.display = isPlaying ? 'flex' : 'none';
-  }
-}
-
-if (musicBtn) {
-  musicBtn.addEventListener('click', startMusic);
-}
-
-if (muteMusicBtn) {
-  muteMusicBtn.addEventListener('click', stopMusic);
-}
-
-if (floatingMusicBtn) {
-  floatingMusicBtn.addEventListener('click', startMusic);
-}
-
-if (floatingMuteMusicBtn) {
-  floatingMuteMusicBtn.addEventListener('click', stopMusic);
-}
-
-if (volumeControl && volumeValue) {
-  volumeControl.addEventListener('input', (e) => {
-    const volume = parseFloat(e.target.value);
-    spaceMusic.volume = volume;
-    if (atmosphereGain) {
-      atmosphereGain.gain.value = volume;
-    }
-    volumeValue.textContent = Math.round(volume * 100) + '%';
-  });
-  spaceMusic.volume = 0.3;
-}
-
-// Set initial volume for proper looping
-spaceMusic.volume = 0.3;
 
 const orbitsBtn = document.getElementById('orbitsBtn');
 if (orbitsBtn) {
@@ -2100,7 +1944,7 @@ if (labelToggle) {
   labelToggle.addEventListener('click', () => {
     showPlanetLabels = !showPlanetLabels;
     labelToggle.classList.toggle('active', showPlanetLabels);
-    labelToggle.textContent = showPlanetLabels ? 'Hide Planet Names' : 'Show Planet Names';
+    labelToggle.textContent = showPlanetLabels ? 'Скрыть названия планет' : 'Показать названия планет';
     
     planetLabels.forEach(label => {
       label.element.style.display = showPlanetLabels ? 'block' : 'none';
@@ -2113,7 +1957,7 @@ if (moonLabelToggle) {
   moonLabelToggle.addEventListener('click', () => {
     showMoonLabels = !showMoonLabels;
     moonLabelToggle.classList.toggle('active', showMoonLabels);
-    moonLabelToggle.textContent = showMoonLabels ? 'Hide Moon Names' : 'Show Moon Names';
+    moonLabelToggle.textContent = showMoonLabels ? 'Скрыть названия спутников' : 'Показать названия спутников';
     
     moonLabels.forEach(label => {
       label.element.style.display = showMoonLabels ? 'block' : 'none';
@@ -2187,10 +2031,10 @@ if (planetList) {
   };
 
   const typeLabels = {
-    planet: '🪐 PLANETS',
-    dwarf: '🌍 DWARF PLANETS', 
-    asteroid: '☄️ MAJOR ASTEROIDS',
-    tno: '🌌 TRANS-NEPTUNIAN OBJECTS'
+    planet: '🪐 ПЛАНЕТЫ',
+    dwarf: '🌍 КАРЛИКОВЫЕ ПЛАНЕТЫ', 
+    asteroid: '☄️ КРУПНЫЕ АСТЕРОИДЫ',
+    tno: '🌌 ТРАНСНЕПТУНОВЫЕ ОБЪЕКТЫ'
   };
 
   Object.entries(groupedBodies).forEach(([type, bodies]) => {
@@ -2207,27 +2051,27 @@ if (planetList) {
       planetItem.className = `planet-item ${body.type}`;
       
       const moonText = body.moons && body.moons.length > 0 ? 
-        `<br><small>🌙 Moons: ${body.moons.length}</small>` : '';
+        `<br><small>🌙 Спутники: ${body.moons.length}</small>` : '';
       
       planetItem.innerHTML = `
         <strong>${body.name}</strong>
-        <br><small>📏 Distance: ${body.dist} AU | Size: ${body.size}</small>
-        <br><small>🗓️ Discovered: ${body.discoveryYear}</small>
+        <br><small>📏 Расстояние: ${body.dist} AU | Размер: ${body.size}</small>
+        <br><small>🗓️ Открыт: ${body.discoveryYear}</small>
         ${moonText}
       `;
       
       planetItem.addEventListener('click', () => {
         const planet = planetMeshes[globalIndex];
         if (planet) {
-          followingPlanet = planet;
+          // Navigate to planet without locking follow mode
           const distance = Math.max(body.size * 8, 15);
-          followOffset.set(distance, distance * 0.5, distance);
-          lastPlanetPosition.set(0, 0, 0);
-          userCameraOffset.set(0, 0, 0);
+          const navOffset = new THREE.Vector3(distance, distance * 0.5, distance);
           const planetPos = new THREE.Vector3();
           planet.mesh.getWorldPosition(planetPos);
-          camera.position.copy(planetPos.clone().add(followOffset));
+          camera.position.copy(planetPos.clone().add(navOffset));
           controls.target.copy(planetPos);
+          controls.minDistance = distance * 0.4;
+          controls.maxDistance = distance * 5;
           controls.update();
         }
       });
@@ -2258,25 +2102,36 @@ function showPlanetInfoCard(body, planetIndex) {
   
   // Set type badge
   const typeLabels = {
-    'planet': 'PLANET',
-    'dwarf': 'DWARF PLANET',
-    'asteroid': 'ASTEROID',
-    'tno': 'TNO'
+    'planet': 'ПЛАНЕТА',
+    'dwarf': 'КАРЛИКОВАЯ ПЛАНЕТА',
+    'asteroid': 'АСТЕРОИД',
+    'tno': 'ТНО'
   };
-  planetTypeBadge.textContent = typeLabels[body.type] || 'CELESTIAL BODY';
+  planetTypeBadge.textContent = typeLabels[body.type] || 'НЕБЕСНОЕ ТЕЛО';
 
-  // Calculate orbital period in years (simplified calculation)
-  const orbitalPeriodYears = Math.sqrt(Math.pow(body.dist, 3));
-  if (orbitalPeriodYears < 1) {
-    orbitalPeriod.textContent = `${Math.round(orbitalPeriodYears * 365)} days`;
-  } else if (orbitalPeriodYears < 10) {
-    orbitalPeriod.textContent = `${orbitalPeriodYears.toFixed(1)} years`;
+  // Use real orbital data when available, otherwise fall back to Kepler estimate
+  if (body.realPeriod) {
+    const localizedPeriod = body.realPeriod
+      .replace(/days?/gi, "дней")
+      .replace(/years?/gi, "лет");
+    orbitalPeriod.textContent = localizedPeriod;
   } else {
-    orbitalPeriod.textContent = `${Math.round(orbitalPeriodYears)} years`;
+    const kp = Math.sqrt(Math.pow(body.realDistAU || body.dist, 3));
+    orbitalPeriod.textContent = kp < 1 ? `${Math.round(kp * 365)} days` : kp < 10 ? `${kp.toFixed(1)} years` : `${Math.round(kp)} years`;
   }
 
-  sizeRelative.textContent = `${body.size}x Earth`;
-  distanceFromSun.textContent = `${body.dist} AU`;
+  if (body.realSizeVsEarth) {
+    const localizedSize = body.realSizeVsEarth.replace(/\(reference\)/gi, "(эталон)");
+    sizeRelative.textContent = localizedSize + (body.realDiameterKm ? ` (⌀ ${body.realDiameterKm.toLocaleString()} км)` : '');
+  } else {
+    sizeRelative.textContent = `${body.size}× Earth`;
+  }
+
+  if (body.realDistAU) {
+    distanceFromSun.textContent = `${body.realDistAU.toLocaleString()} AU`;
+  } else {
+    distanceFromSun.textContent = `${body.dist} AU (scene)`;
+  }
   discoveryYear.textContent = body.discoveryYear;
   planetDescription.textContent = body.info;
 
@@ -2293,17 +2148,17 @@ function showPlanetInfoCard(body, planetIndex) {
       const moonItem = document.createElement('div');
       moonItem.className = 'moon-item';
       
-      const orbitalPeriodDays = moon.speed > 0 ? (2 * Math.PI / moon.speed).toFixed(1) : 'Unknown';
+      const orbitalPeriodDays = moon.speed > 0 ? (2 * Math.PI / moon.speed).toFixed(1) : 'Неизвестно';
       
       moonItem.innerHTML = `
         <div class="moon-name">🌙 ${moon.name}</div>
         <div class="moon-info">
-          Size: ${moon.size}x Earth<br>
-          Distance: ${moon.dist} planet radii<br>
-          Period: ${orbitalPeriodDays} days
+          Размер: ${moon.size}x Земли<br>
+          Расстояние: ${moon.dist} радиусов планеты<br>
+          Период: ${orbitalPeriodDays} дней
         </div>
         <div class="moon-follow-btn">
-          <button class="follow-moon-btn">🎯 Follow</button>
+          <button class="follow-moon-btn">🎯 Следовать</button>
         </div>
       `;
       
@@ -2362,14 +2217,14 @@ function updateFollowButtonState(planetIndex) {
   currentPlanetIndex = planetIndex;
   
   if (followingTarget === currentPlanet && followingType === 'planet') {
-    followBtn.textContent = '🛑 STOP FOLLOWING';
+    followBtn.textContent = '🛑 ПРЕКРАТИТЬ СЛЕЖЕНИЕ';
     followBtn.classList.add('following');
     if (stopFollowBtn) {
       stopFollowBtn.style.display = 'block';
       stopFollowBtn.classList.add('active');
     }
   } else {
-    followBtn.textContent = '🎯 FOLLOW PLANET';
+    followBtn.textContent = '🎯 СЛЕДОВАТЬ ЗА ПЛАНЕТОЙ';
     followBtn.classList.remove('following');
     if (stopFollowBtn && !followingTarget) {
       stopFollowBtn.style.display = 'none';
@@ -2391,6 +2246,7 @@ function followPlanet(planetIndex) {
   followOffset.set(distance, distance * 0.5, distance);
   lastPlanetPosition.set(0, 0, 0);
   userCameraOffset.set(0, 0, 0);
+  followJustStarted = true;
   
   // Standard follow mode for planets (limited zoom)
   controls.enableZoom = true;
@@ -2412,6 +2268,7 @@ function followMoon(moonMesh, moonData, parentPlanetName) {
   followOffset.set(distance, distance * 0.5, distance);
   lastPlanetPosition.set(0, 0, 0);
   userCameraOffset.set(0, 0, 0);
+  followJustStarted = true;
   
   // Standard follow mode for moons (limited zoom)
   controls.enableZoom = true;
@@ -2439,17 +2296,18 @@ function followSun() {
   sun.getWorldPosition(sunPos);
   
   // Position camera at a good distance from Sun
-  camera.position.set(sunPos.x + 25, sunPos.y + 12, sunPos.z + 25);
+  camera.position.set(sunPos.x + 40, sunPos.y + 20, sunPos.z + 40);
   controls.target.copy(sunPos);
   
   // Enable zoom controls for Sun following
   controls.enableZoom = true;
   controls.minDistance = 10;  // Minimum zoom distance
-  controls.maxDistance = 100; // Maximum zoom distance
+  controls.maxDistance = 300; // Maximum zoom distance
   
   // Reset follow offset tracking
   lastPlanetPosition.set(0, 0, 0);
   userCameraOffset.set(0, 0, 0);
+  followJustStarted = false; // Sun follow doesn't use snap logic
   
   // Update stop follow button
   const stopFollowBtn = document.getElementById('stopFollowBtn');
@@ -2458,7 +2316,7 @@ function followSun() {
     stopFollowBtn.classList.add('active');
   }
   
-  console.log('Now following the Sun (zoom enabled)');
+  console.log('Теперь следуем за Солнцем (масштабирование включено)');
 }
 
 // Stop following planet function
@@ -2468,10 +2326,9 @@ function stopFollowingPlanet() {
   followingType = null;
   lastPlanetPosition.set(0, 0, 0);
   userCameraOffset.set(0, 0, 0);
+  followJustStarted = false;
   
-  // Reset camera position like pressing R key
-  camera.position.set(0, 30, 70);
-  controls.target.set(0, 0, 0);
+  // Return to default overview (uses the saved state from startup)
   controls.reset();
   
   // Reset zoom controls to default
@@ -2487,7 +2344,7 @@ function stopFollowingPlanet() {
   const stopFollowBtn = document.getElementById('stopFollowBtn');
   
   if (followBtn) {
-    followBtn.textContent = '🎯 FOLLOW PLANET';
+    followBtn.textContent = '🎯 СЛЕДОВАТЬ ЗА ПЛАНЕТОЙ';
     followBtn.classList.remove('following');
   }
   
@@ -2496,7 +2353,7 @@ function stopFollowingPlanet() {
     stopFollowBtn.classList.remove('active');
   }
   
-  console.log('Stopped following and reset view');
+  console.log('Слежение остановлено, вид сброшен');
 }
 
 function hidePlanetInfoCard() {
@@ -2504,337 +2361,6 @@ function hidePlanetInfoCard() {
   card.style.display = 'none';
 }
 
-// Eclipse Tour Functions
-function createEclipseCorona() {
-  if (eclipseCorona) {
-    scene.remove(eclipseCorona);
-  }
-  
-  const coronaGeometry = new THREE.RingGeometry(5.2, 8, 32);
-  const coronaMaterial = new THREE.MeshBasicMaterial({
-    color: 0xffffff,
-    transparent: true,
-    opacity: 0,
-    side: THREE.DoubleSide
-  });
-  
-  eclipseCorona = new THREE.Mesh(coronaGeometry, coronaMaterial);
-  eclipseCorona.lookAt(camera.position);
-  scene.add(eclipseCorona);
-}
-
-function startEclipseTour() {
-  if (eclipseTourActive) {
-    stopEclipseTour();
-    return;
-  }
-  
-  eclipseTourActive = true;
-  eclipseTourPhase = 0;
-  eclipseTourTimer = 0;
-  
-  // Store original positions
-  originalEclipsePositions.earth = planetMeshes[2].pivot.rotation.y;
-  originalEclipsePositions.moon = planetMeshes[2].moons[0].pivot.rotation.y;
-  
-  // Define camera positions for cinematic tour
-  eclipseCameraPositions = [
-    // Phase 0: Wide view showing alignment
-    { position: new THREE.Vector3(0, 20, 40), target: new THREE.Vector3(0, 0, 0) },
-    // Phase 1: Side view of Earth-Moon-Sun
-    { position: new THREE.Vector3(25, 5, 0), target: new THREE.Vector3(15, 0, 0) },
-    // Phase 2: Close to Earth during eclipse
-    { position: new THREE.Vector3(16, 2, 3), target: new THREE.Vector3(15, 0, 0) },
-    // Phase 3: Corona view during totality
-    { position: new THREE.Vector3(14, 1, 1), target: new THREE.Vector3(0, 0, 0) },
-    // Phase 4: Shadow on Earth view
-    { position: new THREE.Vector3(15, 8, 5), target: new THREE.Vector3(15, 0, 0) }
-  ];
-  
-  // Position Earth and Moon for eclipse
-  positionForEclipse();
-  
-  // Create corona effect
-  createEclipseCorona();
-  
-  // Show info panel
-  const infoPanel = document.getElementById('eclipseTourInfo');
-  if (infoPanel) {
-    // Make the info panel visible at bottom and semi-transparent
-    infoPanel.style.display = 'block';
-    infoPanel.style.opacity = '0.98';
-    
-    // Update title and emoji based on eclipse type
-    const titleElement = infoPanel.querySelector('h3');
-    const emojiElement = infoPanel.querySelector('div[style*="font-size:40px"]');
-    
-    if (eclipseType === 'solar') {
-      if (titleElement) titleElement.textContent = 'Solar Eclipse: Cinematic Tour';
-      if (emojiElement) emojiElement.textContent = '🌒';
-    } else {
-      if (titleElement) titleElement.textContent = 'Lunar Eclipse: Cinematic Tour';
-      if (emojiElement) emojiElement.textContent = '🌕';
-    }
-  }
-  
-  // Update button
-  const solarBtn = document.getElementById('solarEclipseTourBtn');
-  const lunarBtn = document.getElementById('lunarEclipseTourBtn');
-  
-  if (eclipseType === 'solar' && solarBtn) {
-    solarBtn.classList.add('active');
-    solarBtn.textContent = '⏹️ Stop Solar Tour';
-  } else if (eclipseType === 'lunar' && lunarBtn) {
-    lunarBtn.classList.add('active');
-    lunarBtn.textContent = '⏹️ Stop Lunar Tour';
-  }
-  
-  // Hide all UI elements during tour for cinematic experience
-  const uiEls = document.querySelectorAll('.controls, .celestial-panel, .info, #planetInfoCard, #showUIBtn');
-  uiEls.forEach(el => {
-    if (el) {
-      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      el.style.opacity = '0';
-      el.style.pointerEvents = 'none';
-      el.classList.add('ui-hidden');
-    }
-  });
-
-  // Dim distant stars slightly for emphasis
-  if (distantStars && distantStars.material) {
-    distantStars.material.opacity = 0.65;
-  }
-  
-  console.log('🌒 Eclipse Tour Started! Enjoy the cinematic journey...');
-}
-
-function positionForEclipse() {
-  // Position Earth
-  planetMeshes[2].pivot.rotation.y = 0; // Earth at 0 degrees
-  
-  // Position Moon based on eclipse type
-  if (planetMeshes[2].moons && planetMeshes[2].moons[0]) {
-    if (eclipseType === 'solar') {
-      // Solar eclipse: Moon between Sun and Earth
-      planetMeshes[2].moons[0].pivot.rotation.y = 0; // Moon on same side as Earth, closer to Sun
-    } else {
-      // Lunar eclipse: Earth between Sun and Moon
-      planetMeshes[2].moons[0].pivot.rotation.y = Math.PI; // Moon at 180 degrees (opposite side from Sun)
-    }
-  }
-}
-
-function updateEclipseTour() {
-  if (!eclipseTourActive) return;
-  
-  eclipseTourTimer += 16; // Assuming 60fps
-  
-  // Switch phases every 4 seconds
-  if (eclipseTourTimer >= eclipsePhaseDuration) {
-    eclipseTourPhase++;
-    eclipseTourTimer = 0;
-    
-    if (eclipseTourPhase >= eclipseCameraPositions.length) {
-      stopEclipseTour();
-      return;
-    }
-  }
-  
-  // Update progress bar and phase info
-  updateEclipsePhaseInfo();
-  
-  // Smooth camera transition
-  const currentPhase = eclipseCameraPositions[eclipseTourPhase];
-  const progress = eclipseTourTimer / eclipsePhaseDuration;
-  const smoothProgress = 0.5 * (1 - Math.cos(progress * Math.PI)); // Smooth interpolation
-  
-  // Update camera position
-  if (eclipseTourPhase > 0) {
-    const prevPhase = eclipseCameraPositions[eclipseTourPhase - 1];
-    camera.position.lerpVectors(prevPhase.position, currentPhase.position, smoothProgress);
-    
-    const lerpTarget = new THREE.Vector3();
-    lerpTarget.lerpVectors(prevPhase.target, currentPhase.target, smoothProgress);
-    controls.target.copy(lerpTarget);
-  } else {
-    camera.position.lerp(currentPhase.position, 0.02);
-    controls.target.lerp(currentPhase.target, 0.02);
-  }
-  
-  // Eclipse effects based on phase
-  updateEclipseEffects();
-  
-  controls.update();
-}
-
-function updateEclipsePhaseInfo() {
-  const phaseTitle = document.getElementById('eclipsePhaseTitle');
-  const phaseDesc = document.getElementById('eclipsePhaseDesc');
-  const progressBar = document.getElementById('eclipseProgress');
-  
-  if (!phaseTitle || !phaseDesc || !progressBar) return;
-  
-  const progress = (eclipseTourTimer / eclipsePhaseDuration) * 100;
-  progressBar.style.width = `${progress}%`;
-  
-  // Different phase descriptions for solar vs lunar eclipse
-  const solarEclipseInfo = [
-    {
-      title: "Phase 1: Getting Ready (Alignment)",
-      desc: "We start far away so you can see the Sun, Earth and Moon line up. Think of it as three friends standing in a row — from our view, they look perfect when they line up. This helps you see how the solar eclipse can happen."
-    },
-    {
-      title: "Phase 2: First Contact (Moon Moves In)",
-      desc: "Now the Moon slowly moves between the Earth and the Sun. You will see the Sun start to look a little bitten — that's the Moon covering it. Take your time, watch the motion."
-    },
-    {
-      title: "Phase 3: Approaching Totality (Shadow Grows)",
-      desc: "The Moon's shadow stretches over the Earth. The light will change and things will get dimmer — like when clouds pass over the sun. We'll move closer so you can feel the scale."
-    },
-    {
-      title: "Phase 4: Total Solar Eclipse (The Corona)",
-      desc: "For a brief magical moment the Sun is hidden and we can see the corona — a beautiful glowing ring. It's one of the most stunning sights in space. We'll slow down so you can enjoy every second."
-    },
-    {
-      title: "Phase 5: The Shadow Passes (Ending)",
-      desc: "The Moon moves on and sunlight returns. The shadow sweeps away and everything goes back to normal. We'll pull back so you can see the full scene again."
-    }
-  ];
-
-  const lunarEclipseInfo = [
-    {
-      title: "Phase 1: Getting Ready (Alignment)",
-      desc: "We start far away so you can see the Sun, Earth and Moon line up. Think of it as three friends standing in a row — but this time Earth is in the middle, blocking sunlight from reaching the Moon. This helps you see how the lunar eclipse can happen."
-    },
-    {
-      title: "Phase 2: Entering Earth's Shadow (Penumbra)",
-      desc: "Now the Moon slowly moves into Earth's shadow. You will see the Moon start to look a little darker — that's Earth's shadow covering it. The Moon doesn't disappear, it just gets dimmer as Earth blocks the sunlight."
-    },
-    {
-      title: "Phase 3: Deeper Shadow (Umbra Approaches)",
-      desc: "The Moon moves deeper into Earth's shadow. The light will change and the Moon will get much darker — like when you stand in someone's shadow. We'll move closer so you can see how Earth completely blocks direct sunlight."
-    },
-    {
-      title: "Phase 4: Total Lunar Eclipse (Complete Shadow)",
-      desc: "For a moment the Moon is completely in Earth's shadow! Even though no direct sunlight reaches it, the Moon doesn't completely disappear. Some light still reaches it after bending through Earth's atmosphere, which is why we can still see it faintly."
-    },
-    {
-      title: "Phase 5: Leaving the Shadow (Ending)",
-      desc: "The Moon moves out of Earth's shadow and returns to its normal bright color. The shadow passes away and everything goes back to normal. We'll pull back so you can see the full scene again."
-    }
-  ];
-  
-  const phaseInfo = eclipseType === 'solar' ? solarEclipseInfo : lunarEclipseInfo;
-  
-  if (eclipseTourPhase < phaseInfo.length) {
-    phaseTitle.textContent = phaseInfo[eclipseTourPhase].title;
-    phaseDesc.textContent = phaseInfo[eclipseTourPhase].desc;
-  }
-}
-
-function updateEclipseEffects() {
-  const progress = eclipseTourTimer / eclipsePhaseDuration;
-  
-  switch (eclipseTourPhase) {
-    case 0: // Approach phase
-      if (eclipseCorona) {
-        eclipseCorona.material.opacity = 0;
-      }
-      break;
-      
-    case 1: // Partial eclipse begins
-  // Dim ambient light slightly
-  ambientLight.intensity = 0.5 - (progress * 0.25);
-      break;
-      
-    case 2: // Approaching totality
-  ambientLight.intensity = 0.4 - (progress * 0.35);
-      if (eclipseCorona) {
-        eclipseCorona.material.opacity = progress * 0.3;
-        eclipseCorona.lookAt(camera.position);
-      }
-      break;
-      
-    case 3: // Totality - show corona
-      // Make the scene very dark to emphasize corona
-      ambientLight.intensity = 0.08;
-      if (eclipseCorona) {
-        eclipseCorona.material.opacity = 0.85;
-        eclipseCorona.lookAt(camera.position);
-      }
-      break;
-      
-    case 4: // Eclipse ending
-      ambientLight.intensity = 0.08 + (progress * 0.5);
-      if (eclipseCorona) {
-        eclipseCorona.material.opacity = 0.85 - (progress * 0.9);
-      }
-      break;
-  }
-}
-
-function stopEclipseTour() {
-  eclipseTourActive = false;
-  eclipseTourPhase = 0;
-  eclipseTourTimer = 0;
-  
-  // Restore original positions
-  if (originalEclipsePositions.earth !== undefined) {
-    planetMeshes[2].pivot.rotation.y = originalEclipsePositions.earth;
-  }
-  if (originalEclipsePositions.moon !== undefined && planetMeshes[2].moons && planetMeshes[2].moons[0]) {
-    planetMeshes[2].moons[0].pivot.rotation.y = originalEclipsePositions.moon;
-  }
-  
-  // Restore lighting
-  ambientLight.intensity = 0.5;
-  
-  // Remove corona
-  if (eclipseCorona) {
-    scene.remove(eclipseCorona);
-    eclipseCorona = null;
-  }
-  
-  // Hide info panel
-  const infoPanel = document.getElementById('eclipseTourInfo');
-  if (infoPanel) {
-    infoPanel.style.display = 'none';
-    infoPanel.style.opacity = '0';
-  }
-  
-  // Restore UI elements
-  const uiEls = document.querySelectorAll('.controls, .celestial-panel, .info, #planetInfoCard, #showUIBtn');
-  uiEls.forEach(el => {
-    if (el) {
-      el.style.opacity = '1';
-      el.style.pointerEvents = 'auto';
-      el.classList.remove('ui-hidden');
-    }
-  });
-
-  // Restore distant stars opacity
-  if (distantStars && distantStars.material) {
-    distantStars.material.opacity = 0.9;
-  }
-  
-  // Reset camera controls
-  controls.enableDamping = true;
-  
-  // Update buttons
-  const solarBtn = document.getElementById('solarEclipseTourBtn');
-  const lunarBtn = document.getElementById('lunarEclipseTourBtn');
-  
-  if (solarBtn) {
-    solarBtn.classList.remove('active');
-    solarBtn.textContent = '🌒 Solar Eclipse Tour';
-  }
-  if (lunarBtn) {
-    lunarBtn.classList.remove('active');
-    lunarBtn.textContent = '🌕 Lunar Eclipse Tour';
-  }
-  
-  console.log('Eclipse Tour ended. Welcome back to normal view!');
-}
 
 // Enhanced planet interaction
 function onMouseClick(event) {
@@ -2960,20 +2486,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   };
   
-  // Start music automatically when page loads
-  setTimeout(() => {
-    startMusic();
-  }, 1000);
 });
 
 // Keyboard shortcuts
 window.addEventListener('keydown', (event) => {
-  // Check if focus is on chat input to allow normal typing
-  const chatInput = document.getElementById('chatbotInput');
-  if (document.activeElement === chatInput) {
-    return; // Let the spacebar work normally in the chat input
-  }
-  
   switch(event.key.toLowerCase()) {
     case ' ': // Spacebar to pause/resume
       event.preventDefault();
@@ -3031,15 +2547,6 @@ window.addEventListener('keydown', (event) => {
         }
       }
       break;
-    case 'p': // P to toggle music (Play/Pause)
-      const musicBtn = document.getElementById('musicBtn');
-      const muteMusicBtn = document.getElementById('muteMusicBtn');
-      if (isMusicPlaying && muteMusicBtn) {
-        muteMusicBtn.click();
-      } else if (!isMusicPlaying && musicBtn) {
-        musicBtn.click();
-      }
-      break;
     case '+':
     case '=': // Increase speed
       event.preventDefault();
@@ -3066,14 +2573,14 @@ window.addEventListener('keydown', (event) => {
       isBloomManual = !isBloomManual;
       const bloomModeBtn = document.getElementById('bloomModeBtn');
       if (bloomModeBtn) {
-        bloomModeBtn.textContent = isBloomManual ? 'Auto Bloom' : 'Manual Bloom';
+        bloomModeBtn.textContent = isBloomManual ? 'Авто-свечение' : 'Ручное свечение';
         bloomModeBtn.classList.toggle('active', isBloomManual);
       }
       
       if (!isBloomManual) {
-        console.log('🌟 Switched to automatic bloom mode (dynamic with distance)');
+        console.log('🌟 Переключено на автоматическое свечение (динамически по расстоянию)');
       } else {
-        console.log('🎛️ Switched to manual bloom mode (slider control)');
+        console.log('🎛️ Переключено на ручное свечение (управление слайдером)');
         bloomPass.strength = manualBloomStrength;
       }
       break;
@@ -3085,15 +2592,16 @@ controls.enablePan = true;
 controls.enableZoom = true;
 controls.enableRotate = true;
 controls.minDistance = 8;
-controls.maxDistance = 200;
+controls.maxDistance = 500;
 controls.minPolarAngle = 0;
 controls.maxPolarAngle = Math.PI;
 controls.autoRotate = false;
 controls.autoRotateSpeed = 0.3;
 controls.target.set(0, 0, 0);
 
-// Set initial camera position
-camera.position.set(0, 30, 70);
+// Set initial camera position and save it as the OrbitControls reset target
+camera.position.set(0, 55, 130);
+controls.saveState();
 
 // Handle resizing
 window.addEventListener("resize", () => {
