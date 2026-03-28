@@ -6,6 +6,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJZCRLTY3L"></script>
 <script>
@@ -18,8 +20,9 @@
   <style>
     :root {
       /* NASA Official Colors */
-      --nasa-blue: #0b3d91;
-      --nasa-red: #fc3d21;
+      --nasa-blue: #2e294e;
+      --nasa-red: #6883ba;
+      --nasa-red-dark: #556fa3;
       --nasa-white: #ffffff;
       --nasa-gray: #e5e5e5;
       --nasa-dark-gray: #5a6670;
@@ -29,6 +32,7 @@
       --deep-space: #000814;
       --cosmic-blue: #001d3d;
       --star-gold: #ffd60a;
+      --text-cream: #f4f1bb;
       --nebula-purple: #7209b7;
       --comet-blue: #4cc9f0;
       --asteroid-orange: #f77f00;
@@ -36,12 +40,13 @@
       --ring-saturn: #e9c46a;
       
       /* UI Colors */
-      --panel-bg: rgba(11, 61, 145, 0.85);
-      --panel-border: rgba(255, 214, 10, 0.3);
+      --menu-bg: #2e294e;
+      --panel-bg: var(--menu-bg);
+      --panel-border: rgba(244, 241, 187, 0.35);
       --button-primary: linear-gradient(135deg, var(--nasa-blue), var(--cosmic-blue));
-      --button-secondary: linear-gradient(135deg, var(--nasa-dark-gray), #404040);
-      --button-active: linear-gradient(135deg, var(--nasa-red), #d32f2f);
-      --button-hover: linear-gradient(135deg, var(--nasa-blue), #0a2a66);
+      --button-secondary: linear-gradient(135deg, #e072a4, #c85d8f);
+      --button-active: linear-gradient(135deg, var(--nasa-red), var(--nasa-red-dark));
+      --button-hover: linear-gradient(135deg, #e88ab4, #d06090);
     }
 
     * {
@@ -68,7 +73,7 @@
       border-radius: 6px;
       border: 1px solid var(--panel-border);
       backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(11, 61, 145, 0.3);
+      box-shadow: 0 4px 20px rgba(46, 41, 78, 0.35);
       min-width: 180px;
       max-height: 350px;
       overflow: hidden;
@@ -105,10 +110,10 @@
       appearance: none;
       width: 10px;
       height: 10px;
-      background: var(--star-gold);
+      background: var(--text-cream);
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 0 6px rgba(255, 214, 10, 0.5);
+      box-shadow: 0 0 6px rgba(244, 241, 187, 0.45);
     }
     
     .control-group button {
@@ -130,9 +135,9 @@
     }
 
     .follow-planet-btn {
-      background: linear-gradient(135deg, var(--star-gold), #ffa000);
-      color: var(--nasa-black);
-      border: 2px solid var(--star-gold);
+      background: linear-gradient(135deg, var(--text-cream), #e0ddaa);
+      color: var(--menu-bg);
+      border: 2px solid var(--text-cream);
       padding: 10px 20px;
       border-radius: 6px;
       cursor: pointer;
@@ -144,50 +149,50 @@
       transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       width: 100%;
       margin-top: 15px;
-      box-shadow: 0 4px 15px rgba(255, 214, 10, 0.3);
+      box-shadow: 0 4px 15px rgba(244, 241, 187, 0.35);
       transform: translateZ(0); /* Enable hardware acceleration */
     }
 
     .follow-planet-btn:hover {
-      background: linear-gradient(135deg, #ffa000, var(--star-gold));
+      background: linear-gradient(135deg, #e8e5c4, var(--text-cream));
       transform: translateY(-3px) translateZ(0);
-      box-shadow: 0 8px 25px rgba(255, 214, 10, 0.5);
+      box-shadow: 0 8px 25px rgba(244, 241, 187, 0.45);
     }
 
     .follow-planet-btn.following {
-      background: linear-gradient(135deg, var(--nasa-red), #d32f2f);
+      background: linear-gradient(135deg, var(--nasa-red), var(--nasa-red-dark));
       color: var(--nasa-white);
       border-color: var(--nasa-red);
-      box-shadow: 0 4px 15px rgba(252, 61, 33, 0.3);
+      box-shadow: 0 4px 15px rgba(104, 131, 186, 0.35);
     }
 
     .follow-planet-btn.following:hover {
-      background: linear-gradient(135deg, #d32f2f, var(--nasa-red));
-      box-shadow: 0 6px 20px rgba(252, 61, 33, 0.5);
+      background: linear-gradient(135deg, var(--nasa-red-dark), var(--nasa-red));
+      box-shadow: 0 6px 20px rgba(104, 131, 186, 0.45);
     }
     
     .control-group button:hover {
       background: var(--button-hover);
-      box-shadow: 0 0 10px rgba(11, 61, 145, 0.5);
+      box-shadow: 0 0 10px rgba(46, 41, 78, 0.55);
       transform: translateY(-1px);
     }
     
     .control-group button.active {
       background: var(--button-active);
-      box-shadow: 0 0 10px rgba(252, 61, 33, 0.5);
+      box-shadow: 0 0 10px rgba(104, 131, 186, 0.45);
     }
 
     .value-display {
       font-family: 'Montserrat', sans-serif;
       font-size: 9px;
-      color: var(--star-gold);
+      color: var(--text-cream);
       font-weight: 500;
     }
 
     /* Control panel header - NASA themed */
     .control-header {
       padding: 8px;
-      background: linear-gradient(135deg, var(--nasa-red), #d32f2f);
+      background: linear-gradient(135deg, var(--nasa-red), var(--nasa-red-dark));
       border-bottom: 1px solid var(--panel-border);
       cursor: pointer;
       user-select: none;
@@ -215,6 +220,9 @@
     .control-content {
       max-height: 300px;
       overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: var(--text-cream) rgba(255, 255, 255, 0.08);
       transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       padding: 8px;
     }
@@ -229,11 +237,59 @@
     }
     
     /* Minimalist info panel */
+    /* Aliases: bx-earth / bx-sparkle-square are not in boxicons@2.1.4 CSS — map to globe + shape-square glyphs */
+    .bx.bx-earth::before {
+      content: "\eaf8";
+    }
+    .bx.bx-sparkle-square::before {
+      content: "\ec00";
+    }
+
+    /* Boxicons / Bootstrap Icons: font icons need explicit metrics (avoid 0×0) */
+    i.bx,
+    i.bi {
+      display: inline-block;
+      vertical-align: -0.15em;
+      font-size: 1.15em;
+      line-height: 1;
+      margin-right: 3px;
+    }
+
+    .planet-item small i.bx,
+    .planet-item small i.bi {
+      font-size: 1em;
+      margin-right: 4px;
+    }
+
+    .moon-name i.bx {
+      margin-right: 6px;
+    }
+
+    .planet-info-card h4 i.bx {
+      margin-right: 6px;
+    }
+
+    #planetIcon i.bx {
+      font-size: 1.35rem;
+      margin-right: 0;
+    }
+
+    .follow-sun-btn i.bi {
+      margin-right: 6px;
+      vertical-align: -0.1em;
+    }
+
+    .category-header strong {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     .info {
       position: absolute;
       bottom: 15px;
       left: 15px;
-      background: rgba(0, 29, 61, 0.85);
+      background: var(--menu-bg);
       color: var(--nasa-white);
       padding: 10px;
       border-radius: 6px;
@@ -255,17 +311,19 @@
       border: 1px solid var(--panel-border);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(11, 61, 145, 0.3);
+      box-shadow: 0 4px 20px rgba(46, 41, 78, 0.35);
       min-width: 180px;
+      max-width: min(320px, calc(100vw - 30px));
       max-height: 350px;
       overflow: hidden;
+      overflow-x: hidden;
       transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       font-family: 'Montserrat', sans-serif;
     }
 
     .celestial-header {
       padding: 8px;
-      background: linear-gradient(135deg, var(--nasa-red), #d32f2f);
+      background: linear-gradient(135deg, var(--nasa-red), var(--nasa-red-dark));
       border-bottom: 1px solid var(--panel-border);
       cursor: pointer;
       user-select: none;
@@ -294,6 +352,12 @@
     .celestial-content {
       max-height: 290px;
       overflow-y: auto;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+      word-wrap: break-word;
+      scrollbar-width: thin;
+      scrollbar-color: var(--text-cream) rgba(255, 255, 255, 0.08);
       transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
@@ -307,8 +371,10 @@
 
     .celestial-controls {
       padding: 8px 12px;
-      background: rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(255, 214, 10, 0.2);
+      background: var(--menu-bg);
+      border-bottom: 1px solid rgba(244, 241, 187, 0.22);
+      max-width: 100%;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -333,7 +399,7 @@
 
     .label-toggle:hover {
       background: var(--button-hover);
-      box-shadow: 0 0 10px rgba(11, 61, 145, 0.5);
+      box-shadow: 0 0 10px rgba(46, 41, 78, 0.55);
       transform: translateY(-1px) translateZ(0);
     }
 
@@ -351,12 +417,15 @@
       font-size: 11px;
       font-family: 'Montserrat', sans-serif;
       transform: translateZ(0); /* Enable hardware acceleration */
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-wrap: break-word;
     }
     
     .planet-item:hover {
-      background: rgba(255, 214, 10, 0.1);
+      background: rgba(244, 241, 187, 0.08);
       transform: translateX(5px) translateZ(0);
-      box-shadow: 0 2px 8px rgba(255, 214, 10, 0.2);
+      box-shadow: 0 2px 8px rgba(244, 241, 187, 0.15);
     }
 
     .planet-item strong {
@@ -370,7 +439,7 @@
     }
 
     .planet-item.dwarf strong {
-      color: var(--star-gold);
+      color: var(--text-cream);
     }
 
     .planet-item.asteroid strong {
@@ -378,11 +447,11 @@
     }
 
     .planet-item.tno strong {
-      color: var(--nebula-purple);
+      color: var(--text-cream);
     }
 
     .category-header {
-      background: linear-gradient(135deg, var(--nasa-red), #d32f2f);
+      background: linear-gradient(135deg, var(--nasa-red), var(--nasa-red-dark));
       color: var(--nasa-white);
       padding: 6px 12px;
       margin: 8px 0 4px 0;
@@ -404,7 +473,7 @@
     /* Planet name labels in 3D space */
     .planet-label {
       position: absolute;
-      background: rgba(11, 61, 145, 0.9);
+      background: rgba(46, 41, 78, 0.95);
       color: var(--nasa-white);
       padding: 2px 6px;
       border-radius: 3px;
@@ -414,7 +483,7 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       pointer-events: none;
-      border: 1px solid rgba(255, 214, 10, 0.5);
+      border: 1px solid rgba(244, 241, 187, 0.45);
       backdrop-filter: blur(5px);
       z-index: 1000;
       transition: opacity 0.3s ease;
@@ -423,7 +492,7 @@
     /* Moon name labels in 3D space */
     .moon-label {
       position: absolute;
-      background: rgba(252, 61, 33, 0.9);
+      background: rgba(104, 131, 186, 0.92);
       color: var(--nasa-white);
       padding: 1px 4px;
       border-radius: 2px;
@@ -433,7 +502,7 @@
       text-transform: uppercase;
       letter-spacing: 0.3px;
       pointer-events: none;
-      border: 1px solid rgba(255, 214, 10, 0.4);
+      border: 1px solid rgba(244, 241, 187, 0.4);
       backdrop-filter: blur(3px);
       z-index: 999;
       transition: opacity 0.3s ease;
@@ -450,7 +519,7 @@
     }
 
     .celestial-content::-webkit-scrollbar-thumb {
-      background: var(--star-gold);
+      background: var(--text-cream);
       border-radius: 2px;
     }
 
@@ -465,7 +534,7 @@
     }
 
     .control-content::-webkit-scrollbar-thumb {
-      background: var(--star-gold);
+      background: var(--text-cream);
       border-radius: 2px;
     }
 
@@ -492,14 +561,14 @@
       font-weight: 600;
       cursor: pointer;
       backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(11, 61, 145, 0.3);
+      box-shadow: 0 4px 20px rgba(46, 41, 78, 0.35);
       display: none;
       transition: all 0.3s ease;
       z-index: 1001;
     }
 
     #showUIBtn:hover {
-      background: linear-gradient(135deg, rgba(252, 61, 33, 0.9), rgba(11, 61, 145, 0.9));
+      background: linear-gradient(135deg, rgba(104, 131, 186, 0.92), rgba(46, 41, 78, 0.95));
       transform: scale(1.05);
     }
 
@@ -509,12 +578,12 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: linear-gradient(135deg, var(--panel-bg), rgba(11, 61, 145, 0.95));
+      background: var(--menu-bg);
       color: var(--nasa-white);
       border-radius: 12px;
       border: 2px solid var(--panel-border);
       backdrop-filter: blur(15px);
-      box-shadow: 0 8px 32px rgba(11, 61, 145, 0.4);
+      box-shadow: 0 8px 32px rgba(46, 41, 78, 0.45);
       min-width: 400px;
       max-width: 500px;
       max-height: 80vh;
@@ -537,7 +606,7 @@
     }
 
     .planet-info-header {
-      background: linear-gradient(135deg, var(--nasa-red), #d32f2f);
+      background: linear-gradient(135deg, var(--nasa-red), var(--nasa-red-dark));
       padding: 15px 20px;
       border-radius: 10px 10px 0 0;
       border-bottom: 2px solid var(--panel-border);
@@ -561,8 +630,8 @@
     }
 
     .planet-type-badge {
-      background: rgba(255, 214, 10, 0.9);
-      color: var(--nasa-black);
+      background: rgba(244, 241, 187, 0.25);
+      color: var(--text-cream);
       padding: 4px 8px;
       border-radius: 20px;
       font-family: 'Montserrat', sans-serif;
@@ -600,6 +669,8 @@
       max-height: calc(80vh - 80px);
       overflow-y: auto;
       overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: var(--text-cream) rgba(255, 255, 255, 0.08);
     }
 
     /* Custom scrollbar for planet info card */
@@ -613,7 +684,7 @@
     }
 
     .planet-info-content::-webkit-scrollbar-thumb {
-      background: var(--star-gold);
+      background: var(--text-cream);
       border-radius: 2px;
     }
 
@@ -626,7 +697,7 @@
       font-family: 'Montserrat', sans-serif;
       font-weight: 600;
       font-size: 14px;
-      color: var(--star-gold);
+      color: var(--text-cream);
       text-transform: uppercase;
       letter-spacing: 1px;
       border-bottom: 1px solid var(--panel-border);
@@ -644,14 +715,14 @@
       background: rgba(0, 0, 0, 0.3);
       padding: 12px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 214, 10, 0.2);
+      border: 1px solid rgba(244, 241, 187, 0.22);
     }
 
     .info-item-label {
       font-family: 'Montserrat', sans-serif;
       font-size: 11px;
       font-weight: 600;
-      color: var(--star-gold);
+      color: var(--text-cream);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 5px;
@@ -668,7 +739,7 @@
       background: rgba(0, 0, 0, 0.4);
       padding: 15px;
       border-radius: 8px;
-      border-left: 4px solid var(--star-gold);
+      border-left: 4px solid var(--text-cream);
       font-family: 'Montserrat', sans-serif;
       font-size: 14px;
       line-height: 1.6;
@@ -677,7 +748,7 @@
     }
 
     .moons-section {
-      background: rgba(0, 29, 61, 0.6);
+      background: var(--menu-bg);
       padding: 15px;
       border-radius: 8px;
       border: 1px solid var(--panel-border);
@@ -738,9 +809,9 @@
     }
 
     .follow-sun-btn {
-      background: linear-gradient(135deg, var(--asteroid-orange), #ff6b35);
+      background: linear-gradient(135deg, var(--nasa-red), var(--nasa-red-dark));
       color: var(--nasa-white);
-      border: 1px solid var(--asteroid-orange);
+      border: 1px solid var(--nasa-red);
       padding: 6px 12px;
       border-radius: 4px;
       cursor: pointer;
@@ -755,9 +826,9 @@
     }
 
     .follow-sun-btn:hover {
-      background: linear-gradient(135deg, #ff6b35, var(--asteroid-orange));
+      background: linear-gradient(135deg, var(--nasa-red-dark), var(--nasa-red));
       transform: translateY(-1px);
-      box-shadow: 0 3px 10px rgba(247, 127, 0, 0.4);
+      box-shadow: 0 3px 10px rgba(104, 131, 186, 0.4);
     }
 
     .orbital-period-display {
@@ -772,7 +843,7 @@
       font-family: 'Montserrat', sans-serif;
       font-size: 16px;
       font-weight: 700;
-      color: var(--star-gold);
+      color: var(--text-cream);
     }
 
     .orbital-period-label {
@@ -784,10 +855,10 @@
     }
 
     .controls-info {
-      background: rgba(0, 0, 0, 0.3);
+      background: var(--menu-bg);
       padding: 15px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 214, 10, 0.2);
+      border: 1px solid rgba(244, 241, 187, 0.22);
     }
 
     .control-item {
@@ -837,11 +908,6 @@
         <span id="speedValue" class="value-display">0.4x Медленно</span>
       </div>
       
-      <div class="control-group">
-        <label>Свечение</label>
-        <input type="range" id="bloomControl" min="0" max="2" step="0.1" value="0">
-        <span id="bloomValue" class="value-display">0</span>
-      </div>
       
       <div class="control-group">
         <button id="pauseBtn">Пауза</button>
@@ -877,15 +943,13 @@
   
   
   <div class="info">
-    <strong style="font-family: 'Montserrat', sans-serif; color: var(--star-gold);">ИССЛЕДОВАТЕЛЬ СОЛНЕЧНОЙ СИСТЕМЫ</strong><br>
-    🪐 8 планет<br>
-    🌍 9 карликовых планет<br>
-    ☄️ 4 пояса астероидов<br>
-    🌌 Транснептуновые объекты<br>
-    🙀 50+ спутников<br>
-    ✨ Светящиеся орбитальные кольца<br>
-    🛰️ Частично используются данные NASA/JPL<br>
-    <button id="followSunBtn" class="follow-sun-btn">☀️ Следовать за Солнцем</button>
+    <strong style="font-family: 'Montserrat', sans-serif; color: var(--text-cream);">ИССЛЕДОВАТЕЛЬ СОЛНЕЧНОЙ СИСТЕМЫ</strong><br>
+    <i class="bx bx-planet" aria-hidden="true"></i> 8 планет<br>
+    <i class="bx bx-earth" aria-hidden="true"></i> 9 карликовых планет<br>
+    <i class="bx bx-sparkle-square" aria-hidden="true"></i> 4 пояса астероидов<br>
+    <i class="bx bx-sparkle-square" aria-hidden="true"></i> Транснептуновые объекты<br>
+    <i class="bx bx-broadcast" aria-hidden="true" title="NASA/JPL"></i> Частично используются данные NASA/JPL<br>
+    <button id="followSunBtn" class="follow-sun-btn"><i class="bi bi-sun-fill" aria-hidden="true"></i> Следовать за Солнцем</button>
   </div>
   
   <div class="celestial-panel collapsed" id="celestialPanel">
@@ -905,7 +969,7 @@
   <div id="planetInfoCard" class="planet-info-card">
     <div class="planet-info-header">
       <h2 class="planet-info-title">
-        <span id="planetIcon">🪐</span>
+        <span id="planetIcon"><i class="bx bx-planet" aria-hidden="true"></i></span>
         <span id="planetName">САТУРН</span>
         <span id="planetTypeBadge" class="planet-type-badge">ПЛАНЕТА</span>
       </h2>
@@ -940,7 +1004,7 @@
       </div>
 
       <div class="info-section" id="moonsSection">
-        <h4>🌙 Спутники (<span id="moonCount">9</span>)</h4>
+        <h4><i class="bx bx-moon" aria-hidden="true"></i> Спутники (<span id="moonCount">9</span>)</h4>
         <div class="moons-section" id="moonsContainer">
           <!-- Moon items will be populated dynamically -->
         </div>
